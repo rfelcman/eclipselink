@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 1998, 2017 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 1998, 2020 Oracle and/or its affiliates. All rights reserved.
  * This program and the accompanying materials are made available under the 
  * terms of the Eclipse Public License v1.0 and Eclipse Distribution License v. 1.0 
  * which accompanies this distribution. 
@@ -356,8 +356,8 @@ public class DatasourceCallQueryMechanism extends DatabaseQueryMechanism {
             shouldAcquireValueAfterInsert = descriptor.getSequence().shouldAcquireValueAfterInsert();
         }
         Collection returnFields = null;
-        if (descriptor.hasReturningPolicy()) {
-            returnFields = descriptor.getReturningPolicy().getFieldsToMergeInsert();
+        if (descriptor.getReturnFieldsToMergeInsert() != null) {
+            returnFields = descriptor.getReturnFieldsToMergeInsert();
         }
 
         // Check to see if sequence number should be retrieved after insert
@@ -781,8 +781,8 @@ public class DatasourceCallQueryMechanism extends DatabaseQueryMechanism {
     public Integer updateObject() throws DatabaseException {
         Collection returnFields = null;
         ClassDescriptor descriptor = getDescriptor();
-        if (descriptor.hasReturningPolicy()) {
-            returnFields = descriptor.getReturningPolicy().getFieldsToMergeUpdate();
+        if (descriptor.getReturnFieldsToMergeUpdate() != null) {
+            returnFields = descriptor.getReturnFieldsToMergeUpdate();
         }
         Integer returnedRowCount = null;
         if (hasMultipleCalls()) {

@@ -117,8 +117,8 @@
 
         <!--Default location for JEE servers binaries-->
         <test.directory>${user.home}/.eclipselinktests</test.directory>
-        <installation.url>https://download.jboss.org/wildfly/18.0.0.Final/wildfly-18.0.0.Final.zip</installation.url>
-        <installation.checksum.md5>8e4d435bb5d6fe466b478dc49d34bf27</installation.checksum.md5>
+        <installation.url>https://download.jboss.org/wildfly/22.0.0.Final/wildfly-preview-22.0.0.Final.zip</installation.url>
+        <installation.checksum.md5>b7c8988d582fcd994a3e7504fc3906ef</installation.checksum.md5>
 
         <!--Test DB property file names-->
         <test.mysql.properties.file>el-test.mysql.properties</test.mysql.properties.file>
@@ -1098,7 +1098,7 @@
                 <plugin>
                     <groupId>org.codehaus.cargo</groupId>
                     <artifactId>cargo-maven2-plugin</artifactId>
-                    <version>1.7.7</version>
+                    <version>1.8.4</version>
                 </plugin>
                 <plugin>
                     <groupId>org.codehaus.gmaven</groupId>
@@ -1564,8 +1564,8 @@
                 <jee.client.version>${wildfly.version}</jee.client.version>
                 <jee.client.type>pom</jee.client.type>
                 <!--Download properties-->
-                <installation.url>https://download.jboss.org/wildfly/18.0.0.Final/wildfly-18.0.0.Final.zip</installation.url>
-                <installation.checksum.md5>8e4d435bb5d6fe466b478dc49d34bf27</installation.checksum.md5>
+                <installation.url>https://download.jboss.org/wildfly/22.0.0.Final/wildfly-preview-22.0.0.Final.zip</installation.url>
+                <installation.checksum.md5>b7c8988d582fcd994a3e7504fc3906ef</installation.checksum.md5>
             </properties>
         </profile>
         <profile>

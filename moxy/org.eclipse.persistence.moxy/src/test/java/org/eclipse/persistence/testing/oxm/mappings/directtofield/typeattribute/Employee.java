@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 1998, 2020 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 1998, 2021 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -51,12 +51,18 @@ public class Employee {
   public boolean equals(Object object) {
     try {
       Employee employee = (Employee) object;
-      if (null != this.getIdentifier() && null != employee.getIdentifier() && this.getIdentifier() instanceof java.util.Calendar && employee.getIdentifier() instanceof java.util.Calendar) {
-          if (((java.util.Calendar)this.getIdentifier()).getTimeInMillis() != ((java.util.Calendar)employee.getIdentifier()).getTimeInMillis()) {
+      Object employeeIdentifier = null;
+      if (employee.getIdentifier() instanceof javax.xml.datatype.XMLGregorianCalendar) {
+        employeeIdentifier = ((javax.xml.datatype.XMLGregorianCalendar)(employee.getIdentifier())).toGregorianCalendar();
+      } else {
+        employeeIdentifier = employee.getIdentifier();
+      }
+      if (null != this.getIdentifier() && null != employeeIdentifier && this.getIdentifier() instanceof java.util.Calendar && employeeIdentifier instanceof java.util.Calendar) {
+          if (((java.util.Calendar)this.getIdentifier()).getTimeInMillis() != ((java.util.Calendar)employeeIdentifier).getTimeInMillis()) {
               return false;
           }
       } else
-      if(!this.getIdentifier().equals(employee.getIdentifier())) {return false;}
+      if(!this.getIdentifier().equals(employeeIdentifier)) {return false;}
       if(!this.getFirstName().equals(employee.getFirstName())) {return false;}
       if(!this.getLastName().equals(employee.getLastName())) {return false;}
       return true;

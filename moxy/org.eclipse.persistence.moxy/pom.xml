@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 
-    Copyright (c) 2019, 2020 Oracle and/or its affiliates. All rights reserved.
+    Copyright (c) 2019, 2021 Oracle and/or its affiliates. All rights reserved.
 
     This program and the accompanying materials are made available under the
     terms of the Eclipse Public License v. 2.0 which is available at
@@ -262,8 +262,6 @@
                         <configuration>
                             <skipTests>${test-skip-moxy-oxm-srg}</skipTests>
                             <reportNameSuffix>test-moxy-oxm-srg</reportNameSuffix>
-                            <forkCount>1</forkCount>
-                            <reuseForks>false</reuseForks>
                             <includes>
                                 <include>org.eclipse.persistence.testing.oxm.OXMSRGTestSuite</include>
                             </includes>
@@ -277,8 +275,6 @@
                         <configuration>
                             <skipTests>${test-skip-moxy-oxm}</skipTests>
                             <reportNameSuffix>test-moxy-oxm</reportNameSuffix>
-                            <forkCount>1</forkCount>
-                            <reuseForks>false</reuseForks>
                             <includes>
                                 <include>*.ContainerAccessorTestSuite</include>
                                 <include>*.*MappingTestSuite</include>
@@ -317,8 +313,6 @@
                                 <platformType>DOM</platformType>
                                 <metadataType>JAVA</metadataType>
                             </systemPropertyVariables>
-                            <forkCount>1</forkCount>
-                            <reuseForks>false</reuseForks>
                             <includes>
                                 <include>**.*TestSuite</include>
                                 <include>**.ClassLoaderTestCases</include>
@@ -337,9 +331,6 @@
                                 <exclude>org.eclipse.persistence.testing.oxm.mappings.anyobjectandanycollection.XMLAnyObjectAndAnyCollectionMappingTestSuite</exclude>
                                 <exclude>org.eclipse.persistence.testing.oxm.mappings.keybased.compositekeyclass.CompositeKeyClassMappingTestSuite</exclude>
                                 <exclude>org.eclipse.persistence.testing.oxm.mappings.sequenced.SequencedMappingTestSuite</exclude>
-                                <!--TODO move to the assembly module. Needs eclipselink.zip file-->
-                                <exclude>org.eclipse.persistence.testing.jaxb.installer.InstallerTestSuite</exclude>
-                                <exclude>org.eclipse.persistence.testing.jaxb.installer.JaxbCompilerTestCase</exclude>
                             </excludes>
                         </configuration>
                     </execution>
@@ -355,8 +346,6 @@
                                 <platformType>DOM</platformType>
                                 <metadataType>XML_ECLIPSELINK</metadataType>
                             </systemPropertyVariables>
-                            <forkCount>1</forkCount>
-                            <reuseForks>false</reuseForks>
                             <includes>
                                 <include>**.DocumentPreservationTestSuite</include>
                                 <include>**.RootElementTestSuite</include>
@@ -403,8 +392,6 @@
                                 <platformType>DOM</platformType>
                                 <metadataType>XML_TOPLINK</metadataType>
                             </systemPropertyVariables>
-                            <forkCount>1</forkCount>
-                            <reuseForks>false</reuseForks>
                             <includes>
                                 <include>**.DocumentPreservationTestSuite</include>
                                 <include>**.RootElementTestSuite</include>
@@ -450,8 +437,6 @@
                                 <platformType>DOC_PRES</platformType>
                                 <metadataType>JAVA</metadataType>
                             </systemPropertyVariables>
-                            <forkCount>1</forkCount>
-                            <reuseForks>false</reuseForks>
                             <includes>
                                 <include>**.*TestSuite</include>
                                 <include>**.ClassLoaderTestCases</include>
@@ -472,9 +457,6 @@
                                 <exclude>org.eclipse.persistence.testing.oxm.mappings.keybased.KeyBasedMappingTestSuite</exclude>
                                 <exclude>org.eclipse.persistence.testing.oxm.mappings.keybased.compositekeyclass.CompositeKeyClassMappingTestSuite</exclude>
                                 <exclude>org.eclipse.persistence.testing.oxm.mappings.sequenced.SequencedMappingTestSuite</exclude>
-                                <!--TODO move to the assembly module. Needs eclipselink.zip file-->
-                                <exclude>org.eclipse.persistence.testing.jaxb.installer.InstallerTestSuite</exclude>
-                                <exclude>org.eclipse.persistence.testing.jaxb.installer.JaxbCompilerTestCase</exclude>
                             </excludes>
                         </configuration>
                     </execution>

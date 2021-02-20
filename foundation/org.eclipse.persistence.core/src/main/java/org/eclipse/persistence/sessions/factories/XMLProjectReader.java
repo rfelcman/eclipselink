@@ -126,6 +126,7 @@ public class XMLProjectReader {
             String schema = null;
             if (shouldUseSchemaValidation()) {
                 schema = SCHEMA_DIR + ECLIPSELINK_SCHEMA;
+                System.out.println("Trying Schema: " + schema);
             }
             // Assume the format is OPM parse the document with OPM validation on.
             XMLPlatform xmlPlatform = XMLPlatformFactory.getInstance().getXMLPlatform();
@@ -138,6 +139,7 @@ public class XMLProjectReader {
                 try {
                     if (shouldUseSchemaValidation()) {
                         schema = SCHEMA_DIR + ECLIPSELINK_1_0_SCHEMA;
+                        System.out.println("Trying Schema: " + schema);
                     }
                     parser = createXMLParser(xmlPlatform, true, false, schema);
                     document = parser.parse(new StringReader(writer.toString()));
@@ -146,23 +148,27 @@ public class XMLProjectReader {
                     try {
                         if (shouldUseSchemaValidation()) {
                             schema = SCHEMA_DIR + TOPLINK_11_SCHEMA;
+                            System.out.println("Trying Schema: " + schema);
                         }
                         parser = createXMLParser(xmlPlatform, true, false, schema);
                         document = parser.parse(new StringReader(writer.toString()));
                     } catch (Exception parseException3){
                         // If the parse validation fails, it may be because the format was 904 which is
                         // not support in eclipselink, just not valid, through original exception.
+                        System.out.println(parseException);
                         throw parseException;
                     }
 
                     String version = document.getDocumentElement().getAttribute("version");
                     // If 10.1.3 format use old format read.
                     if ((version == null) || (version.indexOf("1.0") == -1)) {
+                        System.out.println(parseException);
                         throw parseException;
                     }
                 }
             }
         } catch (Exception exception) {
+            System.out.println(exception);
             throw XMLMarshalException.unmarshalException(exception);
         }
 

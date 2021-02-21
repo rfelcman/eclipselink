@@ -73,7 +73,7 @@ public class XMLProjectReader {
      * PUBLIC:
      * Return if schema validation will be used when parsing the deployment XML.
      */
-    public static boolean shouldUseSchemaValidation() {
+    public static synchronized boolean shouldUseSchemaValidation() {
         return shouldUseSchemaValidation;
     }
 
@@ -83,7 +83,7 @@ public class XMLProjectReader {
      * By default schema validation is on, but can be turned off if validation problems occur,
      * or to improve parsing performance.
      */
-    public static void setShouldUseSchemaValidation(boolean value) {
+    public static synchronized void setShouldUseSchemaValidation(boolean value) {
         shouldUseSchemaValidation = value;
     }
 
@@ -98,7 +98,7 @@ public class XMLProjectReader {
      * Note the default class loader must be able to resolve the domain classes.
      * Note the file must be the deployment XML, not the Mapping Workbench project file.
      */
-    public static Project read(String fileOrResourceName) {
+    public static synchronized Project read(String fileOrResourceName) {
         return read(fileOrResourceName, null);
     }
 
@@ -110,7 +110,7 @@ public class XMLProjectReader {
      * Note the file must be the deployment XML, not the Mapping Workbench project file.
      * This API supports 10g (10.0.3), 11g (11.1.1) formats.
      */
-    public static Project read(Reader reader, ClassLoader classLoader) {
+    public static synchronized Project read(Reader reader, ClassLoader classLoader) {
         // Since a reader is pass and it can only be streamed once (mark does not work)
         // It must be first read into a buffer so multiple readers can be used to
         // determine the format.  This does not effect performance severely.
@@ -216,7 +216,7 @@ public class XMLProjectReader {
      * Note the class loader must be able to resolve the domain classes.
      * Note the file must be the deployment XML, not the Mapping Workbench project file.
      */
-    public static Project read(String fileOrResourceName, ClassLoader classLoader) {
+    public static synchronized Project read(String fileOrResourceName, ClassLoader classLoader) {
         if (fileOrResourceName.toLowerCase().indexOf(".mwp") != -1) {
             throw ValidationException.invalidFileName(fileOrResourceName);
         }
@@ -264,7 +264,7 @@ public class XMLProjectReader {
      * INTERNAL:
      * Read the TopLink 10.1.3 deployment XML format.
      */
-    public static Project read1013Format(Document document, ClassLoader classLoader) {
+    public static synchronized Project read1013Format(Document document, ClassLoader classLoader) {
         Project opmProject = new ObjectPersistenceRuntimeXMLProject();
         return readObjectPersistenceRuntimeFormat(document, classLoader, opmProject);
     }
@@ -272,7 +272,7 @@ public class XMLProjectReader {
      * INTERNAL:
      * Read the TopLink 11.1.1 deployment XML format.
      */
-    public static Project read1111Format(Document document, ClassLoader classLoader) {
+    public static synchronized Project read1111Format(Document document, ClassLoader classLoader) {
         Project opmProject = new ObjectPersistenceRuntimeXMLProject_11_1_1();
         return readObjectPersistenceRuntimeFormat(document, classLoader, opmProject);
     }
@@ -285,7 +285,7 @@ public class XMLProjectReader {
      * @param opmProject
      * @return
      */
-    public static Project readObjectPersistenceRuntimeFormat(Document document, ClassLoader classLoader, Project opmProject){
+    public static synchronized Project readObjectPersistenceRuntimeFormat(Document document, ClassLoader classLoader, Project opmProject){
         XMLLogin xmlLogin = new XMLLogin();
         xmlLogin.setDatasourcePlatform(new org.eclipse.persistence.oxm.platform.DOMPlatform());
         opmProject.setDatasourceLogin(xmlLogin);
@@ -313,7 +313,7 @@ public class XMLProjectReader {
      * Note the default class loader must be able to resolve the domain classes.
      * Note the file must be the deployment XML, not the Mapping Workbench project file.
      */
-    public static Project read(Reader reader) {
+    public static synchronized Project read(Reader reader) {
         return read(reader, null);
     }
 

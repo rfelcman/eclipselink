@@ -169,6 +169,7 @@ public class XMLProjectReader {
             }
         } catch (Exception exception) {
             System.out.println(exception);
+            exception.printStackTrace();
             throw XMLMarshalException.unmarshalException(exception);
         }
 

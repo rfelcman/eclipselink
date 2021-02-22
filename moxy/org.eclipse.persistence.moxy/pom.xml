@@ -310,6 +310,7 @@
                             <skipTests>${test-skip-moxy-oxm-dom}</skipTests>
                             <reportNameSuffix>test-moxy-oxm-dom</reportNameSuffix>
                             <parallel>suites</parallel>
+                            <useUnlimitedThreads>true</useUnlimitedThreads>
                             <systemPropertyVariables>
                                 <platformType>DOM</platformType>
                                 <metadataType>JAVA</metadataType>

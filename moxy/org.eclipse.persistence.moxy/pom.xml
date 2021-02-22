@@ -309,7 +309,6 @@
                         <configuration>
                             <skipTests>${test-skip-moxy-oxm-dom}</skipTests>
                             <reportNameSuffix>test-moxy-oxm-dom</reportNameSuffix>
-                            <reuseForks>false</reuseForks>
                             <systemPropertyVariables>
                                 <platformType>DOM</platformType>
                                 <metadataType>JAVA</metadataType>

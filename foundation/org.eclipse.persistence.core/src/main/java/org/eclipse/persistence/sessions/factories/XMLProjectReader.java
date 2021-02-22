@@ -73,7 +73,7 @@ public class XMLProjectReader {
      * PUBLIC:
      * Return if schema validation will be used when parsing the deployment XML.
      */
-    public static synchronized boolean shouldUseSchemaValidation() {
+    public static boolean shouldUseSchemaValidation() {
         return shouldUseSchemaValidation;
     }
 
@@ -83,7 +83,7 @@ public class XMLProjectReader {
      * By default schema validation is on, but can be turned off if validation problems occur,
      * or to improve parsing performance.
      */
-    public static synchronized void setShouldUseSchemaValidation(boolean value) {
+    public static void setShouldUseSchemaValidation(boolean value) {
         shouldUseSchemaValidation = value;
     }
 
@@ -98,7 +98,7 @@ public class XMLProjectReader {
      * Note the default class loader must be able to resolve the domain classes.
      * Note the file must be the deployment XML, not the Mapping Workbench project file.
      */
-    public static synchronized Project read(String fileOrResourceName) {
+    public static Project read(String fileOrResourceName) {
         return read(fileOrResourceName, null);
     }
 
@@ -110,7 +110,7 @@ public class XMLProjectReader {
      * Note the file must be the deployment XML, not the Mapping Workbench project file.
      * This API supports 10g (10.0.3), 11g (11.1.1) formats.
      */
-    public static synchronized Project read(Reader reader, ClassLoader classLoader) {
+    public static Project read(Reader reader, ClassLoader classLoader) {
         // Since a reader is pass and it can only be streamed once (mark does not work)
         // It must be first read into a buffer so multiple readers can be used to
         // determine the format.  This does not effect performance severely.
@@ -133,10 +133,13 @@ public class XMLProjectReader {
             XMLParser parser = createXMLParser(xmlPlatform, true, false, schema);
 
             try {
+                System.out.println("#####CALL 1#####");
                 document = parser.parse(new StringReader(writer.toString()));
+                System.out.println("#####CALL 2#####");
             } catch (Exception parseException) {
                 // If the parse fails, it may be because the format was EclipseLink 1.0
                 try {
+                    System.out.println("#####CALL 3#####");
                     if (shouldUseSchemaValidation()) {
                         schema = SCHEMA_DIR + ECLIPSELINK_1_0_SCHEMA;
                         System.out.println("Trying Schema: " + schema);
@@ -168,6 +171,7 @@ public class XMLProjectReader {
                 }
             }
         } catch (Exception exception) {
+            System.out.println("#####CALL 4#####");
             System.out.println(exception);
             exception.printStackTrace();
             throw XMLMarshalException.unmarshalException(exception);
@@ -217,7 +221,7 @@ public class XMLProjectReader {
      * Note the class loader must be able to resolve the domain classes.
      * Note the file must be the deployment XML, not the Mapping Workbench project file.
      */
-    public static synchronized Project read(String fileOrResourceName, ClassLoader classLoader) {
+    public static Project read(String fileOrResourceName, ClassLoader classLoader) {
         if (fileOrResourceName.toLowerCase().indexOf(".mwp") != -1) {
             throw ValidationException.invalidFileName(fileOrResourceName);
         }
@@ -265,7 +269,7 @@ public class XMLProjectReader {
      * INTERNAL:
      * Read the TopLink 10.1.3 deployment XML format.
      */
-    public static synchronized Project read1013Format(Document document, ClassLoader classLoader) {
+    public static Project read1013Format(Document document, ClassLoader classLoader) {
         Project opmProject = new ObjectPersistenceRuntimeXMLProject();
         return readObjectPersistenceRuntimeFormat(document, classLoader, opmProject);
     }
@@ -273,7 +277,7 @@ public class XMLProjectReader {
      * INTERNAL:
      * Read the TopLink 11.1.1 deployment XML format.
      */
-    public static synchronized Project read1111Format(Document document, ClassLoader classLoader) {
+    public static Project read1111Format(Document document, ClassLoader classLoader) {
         Project opmProject = new ObjectPersistenceRuntimeXMLProject_11_1_1();
         return readObjectPersistenceRuntimeFormat(document, classLoader, opmProject);
     }
@@ -286,7 +290,7 @@ public class XMLProjectReader {
      * @param opmProject
      * @return
      */
-    public static synchronized Project readObjectPersistenceRuntimeFormat(Document document, ClassLoader classLoader, Project opmProject){
+    public static Project readObjectPersistenceRuntimeFormat(Document document, ClassLoader classLoader, Project opmProject){
         XMLLogin xmlLogin = new XMLLogin();
         xmlLogin.setDatasourcePlatform(new org.eclipse.persistence.oxm.platform.DOMPlatform());
         opmProject.setDatasourceLogin(xmlLogin);
@@ -314,7 +318,7 @@ public class XMLProjectReader {
      * Note the default class loader must be able to resolve the domain classes.
      * Note the file must be the deployment XML, not the Mapping Workbench project file.
      */
-    public static synchronized Project read(Reader reader) {
+    public static Project read(Reader reader) {
         return read(reader, null);
     }
 

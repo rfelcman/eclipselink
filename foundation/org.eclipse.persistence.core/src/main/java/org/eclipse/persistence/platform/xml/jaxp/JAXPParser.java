@@ -316,10 +316,14 @@ public class JAXPParser implements XMLParser {
     @Override
     public Document parse(InputSource inputSource) throws XMLPlatformException {
         try {
+            System.out.println("####getDocumentBuilder()" + getDocumentBuilder() + "#####");
+            System.out.println("####getDocumentBuilder().getSchema()" + getDocumentBuilder().getSchema() + "#####");
             return getDocumentBuilder().parse(inputSource);
         } catch (SAXException e) {
+            System.out.println("#####JAXPParser SAXException#####");
             throw XMLPlatformException.xmlPlatformParseException(e);
         } catch (IOException e) {
+            System.out.println("#####JAXPParser IOException#####");
             throw XMLPlatformException.xmlPlatformParseException(e);
         }
     }

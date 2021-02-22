@@ -146,15 +146,18 @@ public class XMLProjectReader {
                     }
                     parser = createXMLParser(xmlPlatform, true, false, schema);
                     document = parser.parse(new StringReader(writer.toString()));
+                    System.out.println("#####CALL 4#####");
                 } catch (Exception parseException2){
                     // If the parse fails, it may be because the format was 11.1.1
                     try {
+                        System.out.println("#####CALL 5#####");
                         if (shouldUseSchemaValidation()) {
                             schema = SCHEMA_DIR + TOPLINK_11_SCHEMA;
                             System.out.println("Trying Schema: " + schema);
                         }
                         parser = createXMLParser(xmlPlatform, true, false, schema);
                         document = parser.parse(new StringReader(writer.toString()));
+                        System.out.println("#####CALL 6#####");
                     } catch (Exception parseException3){
                         // If the parse validation fails, it may be because the format was 904 which is
                         // not support in eclipselink, just not valid, through original exception.
@@ -171,7 +174,7 @@ public class XMLProjectReader {
                 }
             }
         } catch (Exception exception) {
-            System.out.println("#####CALL 4#####");
+            System.out.println("#####CALL 7#####");
             System.out.println(exception);
             exception.printStackTrace();
             throw XMLMarshalException.unmarshalException(exception);

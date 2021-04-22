@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 1998, 2013 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 1998, 2021 Oracle and/or its affiliates. All rights reserved.
  * This program and the accompanying materials are made available under the 
  * terms of the Eclipse Public License v1.0 and Eclipse Distribution License v. 1.0 
  * which accompanies this distribution. 
@@ -74,6 +74,7 @@ import org.eclipse.persistence.exceptions.ValidationException;
 import org.eclipse.persistence.indirection.ValueHolderInterface;
 import org.eclipse.persistence.internal.helper.DatabaseField;
 import org.eclipse.persistence.internal.helper.DatabaseTable;
+import org.eclipse.persistence.internal.helper.Helper;
 import org.eclipse.persistence.internal.jpa.metadata.MetadataDescriptor;
 import org.eclipse.persistence.internal.jpa.metadata.MetadataLogger;
 import org.eclipse.persistence.internal.jpa.metadata.MetadataProcessor;
@@ -550,7 +551,10 @@ public abstract class RelationshipAccessor extends MappingAccessor {
        
         // Validate the reference descriptor is valid.
         if (referenceDescriptor == null || referenceDescriptor.isEmbeddable() || referenceDescriptor.isEmbeddableCollection()) {
-            throw ValidationException.nonEntityTargetInRelationship(getJavaClass(), getReferenceClass(), getAnnotatedElement());
+            ClassLoader javaClassLoader = getJavaClass().getClass().getClassLoader();
+            ClassLoader referenceClassLoader = getJavaClass().getClass().getClassLoader();
+            throw ValidationException.nonEntityTargetInRelationship(getJavaClass(), Helper.getClassLocation(getJavaClassName(), javaClassLoader),
+                    getReferenceClass(), Helper.getClassLocation(getReferenceClassName(), referenceClassLoader) , getProject(), getProject().getSession().getName(), getAnnotatedElement());
         }
        
         return referenceDescriptor;

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 1998, 2014 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 1998, 2021 Oracle and/or its affiliates. All rights reserved.
  * This program and the accompanying materials are made available under the 
  * terms of the Eclipse Public License v1.0 and Eclipse Distribution License v. 1.0 
  * which accompanies this distribution. 
@@ -1376,8 +1376,8 @@ public class ValidationException extends EclipseLinkException {
         return validationException;
     }
     
-    public static ValidationException nonEntityTargetInRelationship(Object javaClass, Object targetEntity, Object annotatedElement) {
-        Object[] args = {javaClass, targetEntity, annotatedElement};
+    public static ValidationException nonEntityTargetInRelationship(Object javaClass, String javaClassLocation, Object targetEntity, String targetEntityLocation, Object project, String projectLocation, Object annotatedElement) {
+        Object[] args = {javaClass, javaClassLocation, targetEntity, targetEntityLocation, project, projectLocation, annotatedElement};
         ValidationException validationException = new ValidationException(ExceptionMessageGenerator.buildMessage(ValidationException.class, NON_ENTITY_AS_TARGET_IN_RELATIONSHIP, args));
         validationException.setErrorCode(NON_ENTITY_AS_TARGET_IN_RELATIONSHIP);
         return validationException;

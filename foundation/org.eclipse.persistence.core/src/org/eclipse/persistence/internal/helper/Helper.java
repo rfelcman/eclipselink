@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 1998, 2015 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 1998, 2021 Oracle and/or its affiliates. All rights reserved.
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v1.0 and Eclipse Distribution License v. 1.0
  * which accompanies this distribution.
@@ -33,6 +33,7 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.net.URL;
 import java.security.AccessController;
 import java.security.PrivilegedActionException;
 import java.sql.Timestamp;
@@ -397,6 +398,30 @@ public class Helper extends CoreHelper implements Serializable {
             temp = temp.getSuperclass();
         }
         return false;
+    }
+
+    /**
+     * INTERNAL:
+     * Return location from which a Class was loaded.
+     * @return String
+     */
+    public static String getClassLocation(String className, ClassLoader classLoader) {
+        Class c = getClassFromClasseName(className, classLoader);
+        if ( classLoader == null ) {
+            // Try the bootstrap classloader - obtained from the ultimate parent of the System Class Loader.
+            classLoader = ClassLoader.getSystemClassLoader();
+            while ( classLoader != null && classLoader.getParent() != null ) {
+                classLoader = classLoader.getParent();
+            }
+        }
+        if (classLoader != null) {
+            String name = c.getCanonicalName();
+            URL resource = classLoader.getResource(name.replace(".", "/") + ".class");
+            if ( resource != null ) {
+                return resource.toString();
+            }
+        }
+        return "Unknown";
     }
 
     /**

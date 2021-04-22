@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 1998, 2014 Oracle, IBM Corporation and/or its affiliates. All rights reserved.
+ * Copyright (c) 1998, 2021 Oracle, IBM Corporation and/or its affiliates. All rights reserved.
  * This program and the accompanying materials are made available under the 
  * terms of the Eclipse Public License v1.0 and Eclipse Distribution License v. 1.0 
  * which accompanies this distribution. 
@@ -256,7 +256,10 @@ public class ValidationExceptionResource extends ListResourceBundle {
                                            { "7246", "The Entity class [{0}] has an embedded attribute [{1}] of type [{2}] which is NOT an Embeddable class. Probable reason: missing @Embeddable or missing <embeddable> in orm.xml if metadata-complete = true"},
                                            { "7247", "A circular reference was discovered processing derived IDs on the following Entity classes: [{0}] "},
                                            { "7249", "Entity [{0}] uses [{1}] as embedded ID class whose access-type has been determined as [{2}]. But [{1}] does not define any [{2}]. It is likely that you have not provided sufficient metadata in your ID class [{1}]."},
-                                           { "7250", "[{0}] uses a non-entity [{1}] as target entity in the relationship attribute [{2}]."},
+                                           { "7250", "[{0}] from [{1}] uses a non-entity" +
+                                                     "\n\t[{2}] from [{3}]" +
+                                                     "\n\tin Persistence Unit: [{4}] from [{5}]" +
+                                                     "\n\tas target entity in the relationship attribute [{6}]."},
                                            { "7251", "The attribute [{1}] of class [{0}] is mapped to a primary key column in the database. Updates are not allowed."},
                                            { "7252", "There are multiple mapping files called [{1}] in classpath for persistence unit named [ {0} ]."},
                                            { "7253", "There is no mapping file called [{1}] in classpath for persistence unit named [{0}]."},

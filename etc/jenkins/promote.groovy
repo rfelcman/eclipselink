@@ -1,4 +1,4 @@
-// Copyright (c) 2019 Oracle and/or its affiliates. All rights reserved.
+// Copyright (c) 2019, 2021 Oracle and/or its affiliates. All rights reserved.
 //
 // This program and the accompanying materials are made available under the
 // terms of the Eclipse Distribution License v. 1.0, which is available at
@@ -65,6 +65,9 @@ spec:
       requests:
         memory: "1Gi"
         cpu: "500m"
+    volumeMounts:
+    - name: volume-known-hosts
+      mountPath: /home/jenkins/.ssh      
   - name: el-build
     resources:
       limits:
@@ -77,8 +80,6 @@ spec:
     volumeMounts:
     - name: tools
       mountPath: /opt/tools
-    - name: volume-known-hosts
-      mountPath: /home/jenkins/.ssh      
     - name: settings-xml
       mountPath: /home/jenkins/.m2/settings.xml
       subPath: settings.xml
@@ -103,55 +104,53 @@ spec:
         // Prepare and promote EclipseLink artifacts to oss.sonatype.org (staging) and to the Eclipse.org Milestone Builds area
         stage('Promote') {
             steps {
-                container('el-build') {
-                    git branch: '${GIT_BRANCH}', url: '${GIT_REPOSITORY_URL}'
-                    sshagent(['projects-storage.eclipse.org-bot-ssh']) {
-                        withCredentials([file(credentialsId: 'secret-subkeys.asc', variable: 'KEYRING')]) {
-                            sh label: '', script: '''
-                                gpg --batch --import "${KEYRING}"
-                                for fpr in $(gpg --list-keys --with-colons  | awk -F: \'/fpr:/ {print $10}\' | sort -u);
-                                do
-                                    echo -e "5\\ny\\n" |  gpg --batch --command-fd 0 --expert --edit-key $fpr trust;
-                                done'''
-                        }
-                        // Download selected nightly build from Eclipse.org Nightly Builds
-                        sh """
-                            mkdir -p ${HOME}/etc/jenkins
-                            cp -r ${WORKSPACE}/etc/jenkins/* ${HOME}/etc/jenkins
-                            cp ${WORKSPACE}/buildsystem/ant_customizations.jar ${HOME}/etc/jenkins
-                            ${HOME}/etc/jenkins/promote_init.sh
-                            """
-                        // Prepare and promote EclipseLink artifacts to oss.sonatype.org (staging)
-                        sh """
-                            . /etc/profile
-                            curl --version
-                            echo ${RELEASE}
-                            echo ${MAJOR_VERSION}
-                            echo ${NIGHTLY_BUILD_ID}
-                            echo ${RELEASE_CANDIDATE_ID}
-                            echo ${MAJOR_VERSION}
-                            echo ${SIGN}
-                            echo ${DEBUG}
-                            if [ ${RELEASE} == 'false' ]
-                            then
-                                echo calling "promote.sh ${NIGHTLY_BUILD_ID} ${RELEASE_CANDIDATE_ID} ${MAJOR_VERSION} ${SIGN} ${DEBUG}"
-                                ${HOME}/etc/jenkins/promote.sh ${NIGHTLY_BUILD_ID} ${RELEASE_CANDIDATE_ID} ${MAJOR_VERSION} ${SIGN} ${DEBUG}
-                            else
-                                echo calling "promote.sh release ${RELEASE_CANDIDATE_ID} ${MAJOR_VERSION} ${SIGN} ${DEBUG}"
-                                ${HOME}/etc/jenkins/promote.sh release ${RELEASE_CANDIDATE_ID} ${MAJOR_VERSION} ${SIGN} ${DEBUG}
-                            fi
-                        """
-                        // Promote EclipseLink bundles to the Eclipse.org Milestone Builds area
-                        sh """
-                            echo ${RELEASE}
-                            if [ ${RELEASE} == 'false' ]
-                            then
-                                ${HOME}/etc/jenkins/publish_milestone.sh
-                            else
-                                ${HOME}/etc/jenkins/publish_release.sh                            
-                            fi
-                            """
+                git branch: '${GIT_BRANCH}', url: '${GIT_REPOSITORY_URL}'
+                sshagent(['projects-storage.eclipse.org-bot-ssh']) {
+                    withCredentials([file(credentialsId: 'secret-subkeys.asc', variable: 'KEYRING')]) {
+                        sh label: '', script: '''
+                             gpg --batch --import "${KEYRING}"
+                             for fpr in $(gpg --list-keys --with-colons  | awk -F: \'/fpr:/ {print $10}\' | sort -u);
+                              do
+                                echo -e "5\\ny\\n" |  gpg --batch --command-fd 0 --expert --edit-key $fpr trust;
+                              done'''
                     }
+                    // Download selected nightly build from Eclipse.org Nightly Builds
+                    sh """
+                        mkdir -p ${HOME}/etc/jenkins
+                        cp -r ${WORKSPACE}/etc/jenkins/* ${HOME}/etc/jenkins
+                        cp ${WORKSPACE}/buildsystem/ant_customizations.jar ${HOME}/etc/jenkins
+                        ${HOME}/etc/jenkins/promote_init.sh
+                    """
+                    // Prepare and promote EclipseLink artifacts to oss.sonatype.org (staging)
+                    sh """
+                        . /etc/profile
+                        curl --version
+                        echo ${RELEASE}
+                        echo ${MAJOR_VERSION}
+                        echo ${NIGHTLY_BUILD_ID}
+                        echo ${RELEASE_CANDIDATE_ID}
+                        echo ${MAJOR_VERSION}
+                        echo ${SIGN}
+                        echo ${DEBUG}
+                        if [ ${RELEASE} == 'false' ]
+                        then
+                            echo calling "promote.sh ${NIGHTLY_BUILD_ID} ${RELEASE_CANDIDATE_ID} ${MAJOR_VERSION} ${SIGN} ${DEBUG}"
+                            ${HOME}/etc/jenkins/promote.sh ${NIGHTLY_BUILD_ID} ${RELEASE_CANDIDATE_ID} ${MAJOR_VERSION} ${SIGN} ${DEBUG}
+                        else
+                            echo calling "promote.sh release ${RELEASE_CANDIDATE_ID} ${MAJOR_VERSION} ${SIGN} ${DEBUG}"
+                            ${HOME}/etc/jenkins/promote.sh release ${RELEASE_CANDIDATE_ID} ${MAJOR_VERSION} ${SIGN} ${DEBUG}
+                        fi
+                    """
+                    // Promote EclipseLink bundles to the Eclipse.org Milestone Builds area
+                    sh """
+                        echo ${RELEASE}
+                        if [ ${RELEASE} == 'false' ]
+                        then
+                            ${HOME}/etc/jenkins/publish_milestone.sh
+                        else
+                            ${HOME}/etc/jenkins/publish_release.sh                            
+                        fi
+                    """
                 }
             }
         }

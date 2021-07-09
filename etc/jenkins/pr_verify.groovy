@@ -206,18 +206,16 @@ spec:
                 }
             }
         }
-        // LRG Server tests
-/*
-        stage('LRG Server tests (Wildfly)') {
+        stage('LRG Server tests (GlassFish)') {
             steps {
                 container('el-build') {
                     sh """
-                            etc/jenkins/test_server.sh
-                        """
+                        mvn --batch-mode verify -pl :org.eclipse.persistence.jpa.test -P server-test-jpa-lrg1,mysql
+                        mvn --batch-mode verify -pl :org.eclipse.persistence.jpa.test -P server-test-jpa-lrg2,mysql
+                    """
                 }
             }
         }
-*/
     }
     post {
         always {

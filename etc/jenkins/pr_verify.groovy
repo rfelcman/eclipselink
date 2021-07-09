@@ -210,8 +210,8 @@ spec:
             steps {
                 container('el-build') {
                     sh """
-                        mvn --batch-mode verify -pl :org.eclipse.persistence.jpa.test -P server-test-jpa-lrg1,mysql
-                        mvn --batch-mode verify -pl :org.eclipse.persistence.jpa.test -P server-test-jpa-lrg2,mysql
+                        mvn --batch-mode verify -pl :org.eclipse.persistence.jpa.test -P server-test-jpa-lrg1,mysql,glassfish
+                        mvn --batch-mode verify -pl :org.eclipse.persistence.jpa.test -P server-test-jpa-lrg2,mysql,glassfish
                     """
                 }
             }

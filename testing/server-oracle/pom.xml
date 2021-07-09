@@ -53,13 +53,14 @@
                     </execution>
                 </executions>
             </plugin>
-            <!--Skip WildFly configuration if server binaries are not available.-->
+            <!--Skip server (WildFly, GlassFish) configuration if server binaries are not available.-->
             <plugin>
                 <groupId>org.codehaus.gmaven</groupId>
                 <artifactId>groovy-maven-plugin</artifactId>
                 <configuration>
                     <source>
                         <![CDATA[
+                        //WildFly configuration
                         project.properties.setProperty("skip.wildfly.configuration", "true")
                         if (properties["cargo.container.installation.home"] == null) {
                             return
@@ -70,6 +71,18 @@
                             project.properties.setProperty("skip.wildfly.configuration", "false")
                         }
                         log.info "Skip WildFly configuration: " + project.properties.getProperty("skip.wildfly.configuration")
+
+                        //GlassFish configuration
+                        project.properties.setProperty("skip.glassfish.configuration", "true")
+                        if (properties["cargo.container.installation.home"] == null) {
+                            return
+                        }
+                        def glassFishHomeDir = new File(properties["cargo.container.installation.home"])
+                        log.info "GlassFishHomeDir exists:" + glassFishHomeDir.exists()
+                        if (glassFishHomeDir.exists() && properties["server.name"] == "glassfish") {
+                            project.properties.setProperty("skip.glassfish.configuration", "false")
+                        }
+                        log.info "Skip GlassFish configuration: " + project.properties.getProperty("skip.glassfish.configuration")
                         ]]>
                     </source>
                 </configuration>

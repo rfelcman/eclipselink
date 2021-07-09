@@ -132,8 +132,8 @@
 
         <!--Default location for JEE servers binaries-->
         <test.directory>${user.home}/.eclipselinktests</test.directory>
-        <installation.url>https://download.jboss.org/wildfly/18.0.0.Final/wildfly-18.0.0.Final.zip</installation.url>
-        <installation.checksum.md5>8e4d435bb5d6fe466b478dc49d34bf27</installation.checksum.md5>
+        <installation.url>https://repo1.maven.org/maven2/org/glassfish/main/distributions/glassfish/6.2.0/glassfish-6.2.0.zip</installation.url>
+        <installation.checksum.md5>b397518a7691c1789d2f3e71ecccf37d</installation.checksum.md5>
 
         <!--Test DB property file names-->
         <test.mysql.properties.file>el-test.mysql.properties</test.mysql.properties.file>
@@ -156,8 +156,8 @@
         <testjee.weblogic.properties.file>el-testjee.weblogic.properties</testjee.weblogic.properties.file>
         <testjee.wildfly.properties.file>el-testjee.wildfly.properties</testjee.wildfly.properties.file>
         <!--Default test JEE Server is WildFly-->
-        <testjee.properties.file>${user.home}/${testjee.wildfly.properties.file}</testjee.properties.file>
-        <testjee.properties.fileName>${testjee.wildfly.properties.file}</testjee.properties.fileName>
+        <testjee.properties.file>${user.home}/${testjee.glassfish.properties.file}</testjee.properties.file>
+        <testjee.properties.fileName>${testjee.glassfish.properties.file}</testjee.properties.fileName>
 
         <!--Default DB driver used for testing-->
         <db.driver.groupId>org.apache.derby</db.driver.groupId>
@@ -165,12 +165,10 @@
         <db.driver.version>${derby.version}</db.driver.version>
 
         <!--Default JEE client used for EJB remote call (testing)-->
-        <jee.client.groupId>org.wildfly</jee.client.groupId>
-        <jee.client.artifactId>wildfly-ejb-client-bom</jee.client.artifactId>
-        <jee.client.version>${wildfly.version}</jee.client.version>
-        <jee.client.type>pom</jee.client.type>
-
-        <skip.glassfish.configuration>true</skip.glassfish.configuration>
+        <jee.client.groupId>org.glassfish.main.appclient</jee.client.groupId>
+        <jee.client.artifactId>gf-client</jee.client.artifactId>
+        <jee.client.version>${glassfish.version}</jee.client.version>
+        <jee.client.type>jar</jee.client.type>
 
         <!--These properties are used in MOXy and SDO tests only-->
         <test.xml.platform>org.eclipse.persistence.platform.xml.jaxp.JAXPPlatform</test.xml.platform>
@@ -1121,7 +1119,7 @@
                 <plugin>
                     <groupId>org.codehaus.cargo</groupId>
                     <artifactId>cargo-maven2-plugin</artifactId>
-                    <version>1.7.7</version>
+                    <version>1.8.5</version>
                 </plugin>
                 <plugin>
                     <groupId>org.codehaus.gmaven</groupId>
@@ -1718,9 +1716,6 @@
         <!--Testing JEE server profiles WildFly, GlassFish, Weblogic-->
         <profile>
             <id>wildfly</id>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
             <properties>
                 <testjee.properties.file>${user.home}/${testjee.wildfly.properties.file}</testjee.properties.file>
                 <testjee.properties.fileName>${testjee.wildfly.properties.file}</testjee.properties.fileName>
@@ -1735,6 +1730,9 @@
         </profile>
         <profile>
             <id>glassfish</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
             <properties>
                 <testjee.properties.file>${user.home}/${testjee.glassfish.properties.file}</testjee.properties.file>
                 <testjee.properties.fileName>${testjee.glassfish.properties.file}</testjee.properties.fileName>
@@ -1744,8 +1742,8 @@
                 <jee.client.type>jar</jee.client.type>
                 <skip.glassfish.configuration>false</skip.glassfish.configuration>
                 <!--Download properties-->
-                <installation.url>https://repo1.maven.org/maven2/org/glassfish/main/distributions/glassfish/5.1.0/glassfish-5.1.0.zip</installation.url>
-                <installation.checksum.md5>2ed2d211fd56e270f3daf8e2b5e01e30</installation.checksum.md5>
+                <installation.url>https://repo1.maven.org/maven2/org/glassfish/main/distributions/glassfish/6.2.0/glassfish-6.2.0.zip</installation.url>
+                <installation.checksum.md5>b397518a7691c1789d2f3e71ecccf37d</installation.checksum.md5>
             </properties>
         </profile>
         <profile>

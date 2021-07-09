@@ -13174,19 +13174,22 @@ public class EntityManagerJUnitTestSuite extends JUnitTestCase {
     }
 
     public void testAutoCloseable() {
-        EntityManagerFactory emfOuter = null;
-        EntityManager emOuter = null;
-        try (JpaEntityManagerFactory emf = (JpaEntityManagerFactory) Persistence.createEntityManagerFactory(getPersistenceUnitName(), JUnitTestCaseHelper.getDatabaseProperties());
-                JpaEntityManager em = (JpaEntityManager) emf.createEntityManager()) {
-            emfOuter = emf;
-            emOuter = em;
-            assertNotNull(emf);
-            assertNotNull(em);
-            assertTrue(emOuter.isOpen());
-            assertTrue(emfOuter.isOpen());
-        } finally {
-            assertFalse(emOuter.isOpen());
-            assertFalse(emfOuter.isOpen());
+        //Skip this test on the server
+        if (isOnServer() == false) {
+            EntityManagerFactory emfOuter = null;
+            EntityManager emOuter = null;
+            try (JpaEntityManagerFactory emf = (JpaEntityManagerFactory) Persistence.createEntityManagerFactory(getPersistenceUnitName(), JUnitTestCaseHelper.getDatabaseProperties());
+                 JpaEntityManager em = (JpaEntityManager) emf.createEntityManager()) {
+                emfOuter = emf;
+                emOuter = em;
+                assertNotNull(emf);
+                assertNotNull(em);
+                assertTrue(emOuter.isOpen());
+                assertTrue(emfOuter.isOpen());
+            } finally {
+                assertFalse(emOuter.isOpen());
+                assertFalse(emfOuter.isOpen());
+            }
         }
     }
 

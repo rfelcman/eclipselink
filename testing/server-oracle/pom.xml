@@ -161,12 +161,14 @@
                                     <version>${project.version}</version>
                                     <destFileName>org.eclipse.persistence.moxy_DEV.jar</destFileName>
                                 </artifactItem>
+                                <!-- Cyclic dependency (org.eclipse.persistence.nosql <-> org.eclipse.persistence.test.server.parent <-> org.eclipse.persistence.jpa.test) disabled now
                                 <artifactItem>
                                     <groupId>org.eclipse.persistence</groupId>
                                     <artifactId>org.eclipse.persistence.nosql</artifactId>
                                     <version>${project.version}</version>
                                     <destFileName>org.eclipse.persistence.nosql_DEV.jar</destFileName>
                                 </artifactItem>
+                                -->
                                 <artifactItem>
                                     <groupId>org.eclipse.persistence</groupId>
                                     <artifactId>org.eclipse.persistence.oracle</artifactId>

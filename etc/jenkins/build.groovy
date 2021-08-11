@@ -177,9 +177,11 @@ spec:
         stage('Publish to nightly') {
             steps {
                 sshagent(['projects-storage.eclipse.org-bot-ssh']) {
+/*
                     sh """
                         etc/jenkins/publish_nightly.sh
                     """
+*/
                 }
             }
         }
@@ -187,9 +189,11 @@ spec:
         stage('Publish to snapshots') {
             steps {
                 container('el-build') {
+/*
                     sh """
                         etc/jenkins/publish_snapshots.sh
                     """
+*/
                 }
             }
         }
@@ -219,6 +223,7 @@ spec:
             recordIssues(tools: [spotBugs(useRankAsPriority: true), java(), javaDoc()])
         }
         // Send a mail on unsuccessful and fixed builds
+/*
         unsuccessful { // means unstable || failure || aborted
             emailext subject: 'Build $BUILD_STATUS $PROJECT_NAME #$BUILD_NUMBER failed!',
                     body: '''Check console output at $BUILD_URL to view the results.''',
@@ -231,5 +236,6 @@ spec:
                     recipientProviders: [culprits(), requestor()],
                     to: '${NOTIFICATION_ADDRESS}'
         }
+*/
     }
 }

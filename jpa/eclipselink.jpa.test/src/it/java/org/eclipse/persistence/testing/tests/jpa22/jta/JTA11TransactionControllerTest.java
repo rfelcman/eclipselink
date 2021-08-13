@@ -86,36 +86,38 @@ public class JTA11TransactionControllerTest extends JUnitTestCase {
      * Check that cached and persisted values are correct.
      */
    public void testCreateAndUpdateEntity() throws Exception {
-       if (!isJTA11) {
-           return;
-       }
-       AbstractSessionLog.getLog().log(SessionLog.INFO, "Running test: {0}", new String[] { "JTA11TransactionControllerTest.testCreateAndUpdateEntity" }, false);
+       if (isOnServer() == true) {
+           if (!isJTA11) {
+               return;
+           }
+           AbstractSessionLog.getLog().log(SessionLog.INFO, "Running test: {0}", new String[]{"JTA11TransactionControllerTest.testCreateAndUpdateEntity"}, false);
 
-       AnimalDAO animalDAO = lookupEJB(AnimalDAO.class, ANIMAL_DAO_JNDI);
-       if (animalDAO == null) {
-           fail("Could not lookup AnimalDAO Stateful EJB");
+           AnimalDAO animalDAO = lookupEJB(AnimalDAO.class, ANIMAL_DAO_JNDI);
+           if (animalDAO == null) {
+               fail("Could not lookup AnimalDAO Stateful EJB");
+           }
+           Animal animal = animalDAO.createAnimal(1, "Toby", null);
+           AnimalDAOUpdate animalDAOUpdate = lookupEJB(AnimalDAOUpdate.class, ANIMAL_DAO_UPDATE_JNDI);
+           if (animalDAO == null) {
+               fail("Could not lookup AnimalDAOUpdate Stateful EJB");
+           }
+           AnimalCheck check = lookupEJB(AnimalCheck.class, ANIMAL_CHECK_JNDI);
+           if (animalDAO == null) {
+               fail("Could not lookup AnimalCheck Singleton EJB");
+           }
+           // Update EJB does the check before transaction commit so we expect "Toby" to be there
+           Animal animal2 = animalDAOUpdate.updateAnimal(1, "Buster", check);
+           String preRefreshName1 = check.getPreRefreshName();
+           String postRefreshName1 = check.getPostRefreshName();
+           assertEquals("Toby", preRefreshName1);
+           assertEquals("Toby", postRefreshName1);
+           // Calling check after exiting from EJB (after transaction commit) so we expect "Buster" to be there
+           check.onEvent(AnimalEvent.update(animal, animal2));
+           String preRefreshName2 = check.getPreRefreshName();
+           String postRefreshName2 = check.getPostRefreshName();
+           assertEquals("Buster", preRefreshName2);
+           assertEquals("Buster", postRefreshName2);
        }
-       Animal animal = animalDAO.createAnimal(1, "Toby", null);
-       AnimalDAOUpdate animalDAOUpdate = lookupEJB(AnimalDAOUpdate.class, ANIMAL_DAO_UPDATE_JNDI);
-       if (animalDAO == null) {
-           fail("Could not lookup AnimalDAOUpdate Stateful EJB");
-       }
-       AnimalCheck check = lookupEJB(AnimalCheck.class, ANIMAL_CHECK_JNDI);
-       if (animalDAO == null) {
-           fail("Could not lookup AnimalCheck Singleton EJB");
-       }
-       // Update EJB does the check before transaction commit so we expect "Toby" to be there
-       Animal animal2 = animalDAOUpdate.updateAnimal(1, "Buster", check);
-       String preRefreshName1 = check.getPreRefreshName();
-       String postRefreshName1 = check.getPostRefreshName();
-       assertEquals("Toby", preRefreshName1);
-       assertEquals("Toby", postRefreshName1);
-       // Calling check after exiting from EJB (after transaction commit) so we expect "Buster" to be there
-       check.onEvent(AnimalEvent.update(animal, animal2));
-       String preRefreshName2 = check.getPreRefreshName();
-       String postRefreshName2 = check.getPostRefreshName();
-       assertEquals("Buster", preRefreshName2);
-       assertEquals("Buster", postRefreshName2);
    }
 
 }

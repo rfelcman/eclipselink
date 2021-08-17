@@ -60,10 +60,10 @@ spec:
     resources:
       limits:
         memory: "4Gi"
-        cpu: "1"
+        cpu: "2"
       requests:
         memory: "4Gi"
-        cpu: "1"
+        cpu: "2"
     volumeMounts:
     - name: volume-known-hosts
       mountPath: /home/jenkins/.ssh    
@@ -71,10 +71,10 @@ spec:
     resources:
       limits:
         memory: "12Gi"
-        cpu: "7"
+        cpu: "4"
       requests:
         memory: "12Gi"
-        cpu: "7"
+        cpu: "4"
     image: tkraus/el-build:1.1.9
     volumeMounts:
     - name: tools

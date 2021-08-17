@@ -151,8 +151,8 @@ spec:
                     sh """
                             etc/jenkins/test.sh
                         """
-                }
 */
+                }
             }
         }
         // NoSQL tests

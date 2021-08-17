@@ -71,10 +71,10 @@ spec:
     resources:
       limits:
         memory: "12Gi"
-        cpu: "6"
+        cpu: "8"
       requests:
         memory: "12Gi"
-        cpu: "5.5"
+        cpu: "7.5"
     image: tkraus/el-build:1.1.9
     volumeMounts:
     - name: tools
@@ -147,10 +147,12 @@ spec:
         stage('Tests') {
             steps {
                 container('el-build') {
+/*
                     sh """
                             etc/jenkins/test.sh
                         """
                 }
+*/
             }
         }
         // NoSQL tests
@@ -164,7 +166,7 @@ spec:
             }
         }
         // LRG Server tests
-        stage('LRG Server tests (Wildfly)') {
+        stage('LRG Server tests (GlassFish)') {
             steps {
                 container('el-build') {
                     sh """

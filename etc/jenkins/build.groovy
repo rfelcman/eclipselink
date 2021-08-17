@@ -71,10 +71,10 @@ spec:
     resources:
       limits:
         memory: "12Gi"
-        cpu: "8"
+        cpu: "7"
       requests:
         memory: "12Gi"
-        cpu: "7.5"
+        cpu: "6.5"
     image: tkraus/el-build:1.1.9
     volumeMounts:
     - name: tools

@@ -113,7 +113,7 @@
                                 <artifactItem>
                                     <groupId>org.eclipse.persistence</groupId>
                                     <artifactId>org.eclipse.persistence.asm</artifactId>
-                                    <version>${project.version}</version>
+                                    <version>${eclipselink.asm.version}</version>
                                     <destFileName>org.eclipse.persistence.asm_DEV.jar</destFileName>
                                 </artifactItem>
                                 <artifactItem>

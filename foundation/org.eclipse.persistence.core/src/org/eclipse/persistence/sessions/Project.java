@@ -1,5 +1,6 @@
 /*
- * Copyright (c) 1998, 2019 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 1998, 2021 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2021 IBM Corporation. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -152,6 +153,15 @@ public class Project extends CoreProject<ClassDescriptor, Login, DatabaseSession
     /** Flag that allows DDL generation of table per tenant multitenant descriptors */
     protected boolean allowTablePerMultitenantDDLGeneration = false;
 
+    /** Flag that allows extended logging of JPA L2 cache or not. */
+    protected boolean allowExtendedCacheLogging = false;
+
+    /** Flag that allows extended thread logging or not. */
+    protected boolean allowExtendedThreadLogging = false;
+
+    /** Flag that allows add to extended thread logging output thread stack trace or not.*/
+    protected boolean allowExtendedThreadLoggingThreadDump = false;
+
     /** Flag that allows call deferral to be disabled */
     protected boolean allowSQLDeferral = true;
 
@@ -188,6 +198,9 @@ public class Project extends CoreProject<ClassDescriptor, Login, DatabaseSession
     protected Collection<String> structConverters;
 
     protected boolean allowNullResultMaxMin = true;
+
+    /** Force all queries and relationships to use deferred lock strategy during object building and L2 cache population. */
+    protected boolean queryCacheForceDeferredLocks = false;
 
     /**
      * PUBLIC:
@@ -243,6 +256,22 @@ public class Project extends CoreProject<ClassDescriptor, Login, DatabaseSession
      */
     public void setDefaultQueryResultsCachePolicy(QueryResultsCachePolicy defaultQueryResultsCachePolicy) {
         this.defaultQueryResultsCachePolicy = defaultQueryResultsCachePolicy;
+    }
+
+    /**
+     * PUBLIC:
+     * Get property to Force all queries and relationships to use deferred lock strategy during object building and L2 cache population.
+     */
+    public boolean isQueryCacheForceDeferredLocks() {
+        return queryCacheForceDeferredLocks;
+    }
+
+    /**
+     * PUBLIC:
+     * Set property to Force all queries and relationships to use deferred lock strategy during object building and L2 cache population.
+     * By default there is false value - use use mixed object cache locking strategy (depends on relationship and fetch type) */
+    public void setQueryCacheForceDeferredLocks(boolean queryCacheForceDeferredLocks) {
+        this.queryCacheForceDeferredLocks = queryCacheForceDeferredLocks;
     }
 
     /**
@@ -1319,6 +1348,30 @@ public class Project extends CoreProject<ClassDescriptor, Login, DatabaseSession
     }
 
     /**
+     * INTERNAL:
+     * Return true if extended logging of JPA L2 cache usage is allowed on this project.
+     */
+    public boolean allowExtendedCacheLogging() {
+        return this.allowExtendedCacheLogging;
+    }
+
+    /**
+     * INTERNAL:
+     * Return true if extended thread logging is allowed on this project.
+     */
+    public boolean allowExtendedThreadLogging() {
+        return this.allowExtendedThreadLogging;
+    }
+
+    /**
+     * INTERNAL:
+     * Return true if thread dumps will be added to extended thread logging.
+     */
+    public boolean allowExtendedThreadLoggingThreadDump() {
+        return this.allowExtendedThreadLoggingThreadDump;
+    }
+
+    /**
      * PUBLIC:
      * Return the descriptor for  the alias
      */
@@ -1355,6 +1408,31 @@ public class Project extends CoreProject<ClassDescriptor, Login, DatabaseSession
      */
     public void setAllowNativeSQLQueries(boolean allowNativeSQLQueries) {
         this.allowNativeSQLQueries = allowNativeSQLQueries;
+    }
+
+
+    /**
+     * INTERNAL:
+     * Set whether extended logging of JPA L2 cache usage is allowed on this project.
+     */
+    public void setAllowExtendedCacheLogging(boolean allowExtendedCacheLogging) {
+        this.allowExtendedCacheLogging = allowExtendedCacheLogging;
+    }
+
+    /**
+     * INTERNAL:
+     * Set whether extended thread logging is allowed on this project.
+     */
+    public void setAllowExtendedThreadLogging(boolean allowExtendedThreadLogging) {
+        this.allowExtendedThreadLogging = allowExtendedThreadLogging;
+    }
+
+    /**
+     * INTERNAL:
+     * Set if thread dumps will be added to extended thread logging.
+     */
+    public void setAllowExtendedThreadLoggingThreadDump(boolean allowExtendedThreadLoggingThreadDump) {
+        this.allowExtendedThreadLoggingThreadDump = allowExtendedThreadLoggingThreadDump;
     }
 
     /**

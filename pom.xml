@@ -307,8 +307,22 @@
         <module>bundles</module>
     </modules>
 
+    <dependencies>
+    <dependency>
+        <groupId>io.helidon.build-tools</groupId>
+        <artifactId>helidon-enforcer-plugin</artifactId>
+        <version>3.0.0-SNAPSHOT</version>
+    </dependency>
+    </dependencies>
+
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>io.helidon.build-tools</groupId>
+                <artifactId>helidon-enforcer-plugin</artifactId>
+                <version>3.0.0-SNAPSHOT</version>
+            </dependency>
+
             <!-- our artifacts TODO: this belongs to BOM pom-->
             <dependency>
                 <groupId>org.eclipse.persistence</groupId>
@@ -1959,33 +1973,34 @@
             <build>
                 <pluginManagement>
                     <plugins>
+                        <!--Copyright year in the header check-->
                         <plugin>
-                            <groupId>org.glassfish.copyright</groupId>
-                            <artifactId>glassfish-copyright-maven-plugin</artifactId>
-                            <version>2.4</version>
+                            <groupId>io.helidon.build-tools</groupId>
+                            <artifactId>helidon-enforcer-plugin</artifactId>
+                            <version>3.0.0-SNAPSHOT</version>
                             <configuration>
-                                <templateFile>${copyright.template}</templateFile>
-                                <excludeFile>${copyright.exclude}</excludeFile>
-                                <!-- skip files not under SCM-->
-                                <scmOnly>${copyright.scmonly}</scmOnly>
-                                <!-- for use with repair -->
-                                <update>${copyright.update}</update>
-                                <!-- check that year is correct -->
-                                <ignoreYear>${copyright.ignoreyear}</ignoreYear>
+                                <rules>
+                                    <rule>copyright</rule>
+                                </rules>
+                                <copyrightConfig>
+                                    <failOnError>true</failOnError>
+                                    <templateFile>${copyright.template}</templateFile>
+                                    <excludeFile>${copyright.exclude}</excludeFile>
+                                </copyrightConfig>
                             </configuration>
                         </plugin>
                     </plugins>
                 </pluginManagement>
                 <plugins>
                     <plugin>
-                        <groupId>org.glassfish.copyright</groupId>
-                        <artifactId>glassfish-copyright-maven-plugin</artifactId>
+                        <groupId>io.helidon.build-tools</groupId>
+                        <artifactId>helidon-enforcer-plugin</artifactId>
                         <executions>
                             <execution>
-                                <id>cp-check</id>
+                                <id>copyright-check</id>
+                                <phase>validate</phase>
                                 <goals>
-                                    <!-- Note: this takes ~2 hours -->
-                                    <goal>copyright</goal>
+                                    <goal>check</goal>
                                 </goals>
                             </execution>
                         </executions>

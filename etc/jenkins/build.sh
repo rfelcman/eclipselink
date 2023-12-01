@@ -14,6 +14,8 @@
 
 echo '-[ EclipseLink Build ]-----------------------------------------------------------'
 #/opt/bin/mysql-start.sh
+ps aux | grep mysql
+echo "BBBB: In bash"
 java -cp .:mysql-connector-java-8.0.28.jar TestJDBC
 
 if [ ${CONTINUOUS_BUILD} = "true" ]; then

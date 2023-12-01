@@ -158,6 +158,7 @@ spec:
             steps {
                 container('el-build') {
                     sh """
+                        echo "AAAA: In sh"
                         java -cp .:mysql-connector-java-8.0.28.jar TestJDBC
                         etc/jenkins/build.sh
                     """
@@ -214,10 +215,12 @@ spec:
     }
     post {
         unsuccessful {
-            sh """
-               cat /var/log/mysqld.log
-               java -cp .:mysql-connector-java-8.0.28.jar TestJDBC
-            """
+            container('el-build') {
+                sh """
+                  cat /var/log/mysqld.log
+                  java -cp .:mysql-connector-java-8.0.28.jar TestJDBC
+                """
+            }
         }
     }
 /*

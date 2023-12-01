@@ -14,9 +14,11 @@
 
 echo '-[ EclipseLink Build ]-----------------------------------------------------------'
 #/opt/bin/mysql-start.sh
+echo "BBBB: In bash - BEGIN"
 ps aux | grep mysql
-echo "BBBB: In bash"
+cat /var/log/mysqld.log
 java -cp .:mysql-connector-java-8.0.28.jar TestJDBC
+echo "BBBB: In bash - END"
 
 if [ ${CONTINUOUS_BUILD} = "true" ]; then
     ANT_TARGET=build-continuous

@@ -158,8 +158,10 @@ spec:
             steps {
                 container('el-build') {
                     sh """
-                        echo "AAAA: In sh"
+                        echo "AAAA: In sh - BEGIN"
                         java -cp .:mysql-connector-java-8.0.28.jar TestJDBC
+                        cat /var/log/mysqld.log
+                        echo "AAAA: In sh - END"
                         etc/jenkins/build.sh
                     """
                 }

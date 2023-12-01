@@ -13,7 +13,8 @@
 #  N/A
 
 echo '-[ EclipseLink Build ]-----------------------------------------------------------'
-/opt/bin/mysql-start.sh
+#/opt/bin/mysql-start.sh
+java -cp .:mysql-connector-java-8.0.28.jar TestJDBC
 
 if [ ${CONTINUOUS_BUILD} = "true" ]; then
     ANT_TARGET=build-continuous

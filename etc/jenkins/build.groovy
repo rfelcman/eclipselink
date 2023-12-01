@@ -212,6 +212,18 @@ spec:
             }
         }
     }
+    post {
+        unsuccessful {
+            steps {
+                container('el-build') {
+                    sh """
+                       cat /var/log/mysqld.log
+                       java -cp .:mysql-connector-java-8.0.28.jar TestJDBC
+                    """
+                }
+            }
+        }
+    }
 /*
     post {
         // Send a mail on unsuccessful and fixed builds

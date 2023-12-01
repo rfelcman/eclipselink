@@ -117,6 +117,7 @@ spec:
                         ping -c 3 127.0.0.1
                         tracepath -b localhost
                         tracepath -b 127.0.0.1
+                        /opt/bin/mysql-start.sh                        
                         ps aux | grep mysql
                         cat /var/log/mysqld.log
                         mysql -u root -p'root' -h localhost -P 3306 -D ecltests -e 'status'

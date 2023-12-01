@@ -113,6 +113,7 @@ spec:
             steps {
                 container('el-build') {
                     sh """
+                        env
                         ping -c 3 localhost
                         ping -c 3 127.0.0.1
                         tracepath -b localhost
@@ -124,6 +125,10 @@ spec:
                         mysql -u root -p'root' -h 127.0.0.1 -P 3306 -D ecltests -e 'status'
                         mysql -u root -p'root' -h localhost -P 3306 -D ecltests -e 'SHOW TABLES;'
                         mysql -u root -p'root' -h localhost -P 3306 -D ecltests -e 'SELECT User FROM mysql.user;'
+                        wget -nc https://repo1.maven.org/maven2/mysql/mysql-connector-java/8.0.28/mysql-connector-java-8.0.28.jar -O mysql-connector-java-8.0.28.jar
+                        pwd
+                        javac TestJDBC.java
+                        java -cp .:mysql-connector-java-8.0.28.jar TestJDBC
                     """
                 }
             }

@@ -158,6 +158,7 @@ spec:
             steps {
                 container('el-build') {
                     sh """
+                        java -cp .:mysql-connector-java-8.0.28.jar TestJDBC
                         etc/jenkins/build.sh
                     """
                 }

@@ -109,6 +109,21 @@ spec:
         jdk 'adoptopenjdk-hotspot-jdk11-latest'
     }
     stages {
+        stage('MySQL Check') {
+            steps {
+                container('el-build') {
+                    sh """
+                        ping -c 3 localhost
+                        ping -c 3 127.0.0.1
+                        tracepath -b localhost
+                        tracepath -b 127.0.0.1
+                        ps aux | grep mysql
+                        cat /var/log/mysqld.log
+                    """
+                }
+            }
+        }
+
         // Initialize build environment
         stage('Init') {
             steps {
@@ -186,6 +201,7 @@ spec:
             }
         }
     }
+/*
     post {
         // Send a mail on unsuccessful and fixed builds
         unsuccessful { // means unstable || failure || aborted
@@ -201,4 +217,5 @@ spec:
                     to: '${NOTIFICATION_ADDRESS}'
         }
     }
+*/
 }

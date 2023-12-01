@@ -119,6 +119,10 @@ spec:
                         tracepath -b 127.0.0.1
                         ps aux | grep mysql
                         cat /var/log/mysqld.log
+                        mysql -u root -p'root' -h localhost -P 3306 -D ecltests -e 'status'
+                        mysql -u root -p'root' -h 127.0.0.1 -P 3306 -D ecltests -e 'status'
+                        mysql -u root -p'root' -h localhost -P 3306 -D ecltests -e 'SHOW TABLES;'
+                        mysql -u root -p'root' -h localhost -P 3306 -D ecltests -e 'SELECT User FROM mysql.user;'
                     """
                 }
             }

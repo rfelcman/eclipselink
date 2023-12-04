@@ -15,6 +15,7 @@
 echo '-[ EclipseLink Build ]-----------------------------------------------------------'
 #/opt/bin/mysql-start.sh
 echo "BBBB: In bash - BEGIN"
+export bind_address=0.0.0.0
 df -h
 ps aux | grep mysql
 cat /var/log/mysqld.log

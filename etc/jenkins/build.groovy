@@ -118,6 +118,7 @@ spec:
                         ping -c 3 127.0.0.1
                         tracepath -b localhost
                         tracepath -b 127.0.0.1
+                        export bind_address=0.0.0.0
                         /opt/bin/mysql-start.sh                        
                         ps aux | grep mysql
                         cat /var/log/mysqld.log
@@ -160,6 +161,7 @@ spec:
                 container('el-build') {
                     sh """
                         echo "AAAA: In sh - BEGIN"
+                        export bind_address=0.0.0.0                        
                         df -h
                         java -cp .:mysql-connector-java-8.0.28.jar TestJDBC
                         cat /var/log/mysqld.log

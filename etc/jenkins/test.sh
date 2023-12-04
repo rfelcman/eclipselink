@@ -20,6 +20,7 @@ if [ ${CONTINUOUS_BUILD} = "true" ]; then
 else
     echo '-[ EclipseLink LRG Tests ]-----------------------------------------------------------'
     env
+    export bind_address=0.0.0.0
     /opt/bin/mysql-start.sh
     mysql -e 'status;' -uroot -proot
     mvn -B -V verify -Pstaging,mysql,test-lrg

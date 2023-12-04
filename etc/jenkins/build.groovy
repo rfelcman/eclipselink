@@ -127,6 +127,7 @@ spec:
                         mysql -u root -p'root' -h localhost -P 3306 -D ecltests -e 'SELECT User FROM mysql.user;'
                         wget -nc https://repo1.maven.org/maven2/mysql/mysql-connector-java/8.0.28/mysql-connector-java-8.0.28.jar -O mysql-connector-java-8.0.28.jar
                         pwd
+                        df -h
                         javac TestJDBC.java
                         java -cp .:mysql-connector-java-8.0.28.jar TestJDBC
                     """
@@ -159,6 +160,7 @@ spec:
                 container('el-build') {
                     sh """
                         echo "AAAA: In sh - BEGIN"
+                        df -h
                         java -cp .:mysql-connector-java-8.0.28.jar TestJDBC
                         cat /var/log/mysqld.log
                         echo "AAAA: In sh - END"

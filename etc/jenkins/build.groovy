@@ -126,11 +126,11 @@ spec:
                         mysql -u root -p'root' -h 127.0.0.1 -P 3306 -D ecltests -e 'status'
                         mysql -u root -p'root' -h localhost -P 3306 -D ecltests -e 'SHOW TABLES;'
                         mysql -u root -p'root' -h localhost -P 3306 -D ecltests -e 'SELECT User FROM mysql.user;'
-                        wget -nc https://repo1.maven.org/maven2/mysql/mysql-connector-java/8.0.28/mysql-connector-java-8.0.28.jar -O mysql-connector-java-8.0.28.jar
+                        wget -nc https://repo1.maven.org/maven2/com/mysql/mysql-connector-j/8.2.0/mysql-connector-j-8.2.0.jar -O mysql-connector-j-8.2.0.jar
                         pwd
                         df -h
                         javac TestJDBC.java
-                        java -cp .:mysql-connector-java-8.0.28.jar TestJDBC
+                        java -cp .:mysql-connector-j-8.2.0.jar TestJDBC
                     """
                 }
             }
@@ -163,7 +163,7 @@ spec:
                         echo "AAAA: In sh - BEGIN"
                         export bind_address=0.0.0.0                        
                         df -h
-                        java -cp .:mysql-connector-java-8.0.28.jar TestJDBC
+                        java -cp .:mysql-connector-j-8.2.0.jar TestJDBC
                         cat /var/log/mysqld.log
                         echo "AAAA: In sh - END"
                         etc/jenkins/build.sh
@@ -224,7 +224,7 @@ spec:
             container('el-build') {
                 sh """
                   cat /var/log/mysqld.log
-                  java -cp .:mysql-connector-java-8.0.28.jar TestJDBC
+                  java -cp .:mysql-connector-j-8.2.0.jar TestJDBC
                 """
             }
         }

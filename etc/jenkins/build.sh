@@ -19,7 +19,7 @@ export bind_address=0.0.0.0
 df -h
 ps aux | grep mysql
 cat /var/log/mysqld.log
-java -cp .:mysql-connector-java-8.0.28.jar TestJDBC
+java -cp .:mysql-connector-j-8.2.0.jar TestJDBC
 echo "BBBB: In bash - END"
 
 if [ ${CONTINUOUS_BUILD} = "true" ]; then

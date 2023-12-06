@@ -22,7 +22,7 @@ public class TestJDBC {
 //        TEST_DB_PASSWORD=root
 
 
-        String dbURL = System.getProperty("TEST_DB_URL", "jdbc:mysql://localhost:3306/ecltests?allowPublicKeyRetrieval=true");
+        String dbURL = System.getProperty("TEST_DB_URL", "jdbc:mysql://127.0.0.1:3306/ecltests?allowPublicKeyRetrieval=true");
         String dbUsr = System.getProperty("TEST_DB_USERNAME", "root");
         String dbPwd = System.getProperty("TEST_DB_PASSWORD", "root");
         System.out.println(dbURL + "\t" + dbUsr + "\t" + dbPwd);

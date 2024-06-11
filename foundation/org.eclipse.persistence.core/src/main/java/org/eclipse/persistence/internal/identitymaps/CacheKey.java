@@ -421,7 +421,8 @@ public class CacheKey extends ConcurrencyManager implements Cloneable {
      */
     @Override
     public int hashCode() {
-        return this.key.hashCode();
+        //TODO RFELCMAN ????? super.hashCode()
+        return this.key == null ? super.hashCode() : this.key.hashCode();
     }
     
     /**

@@ -17,9 +17,13 @@ import org.eclipse.persistence.internal.helper.type.ReadLockAcquisitionMetadata;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 import java.util.Vector;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -33,7 +37,11 @@ public class ReadLockManager {
      * the readers count on a cache key whenever
      *
      */
-    private final Vector<ConcurrencyManager> readLocks = new Vector<>(1);
+//    private final Vector<ConcurrencyManager> readLocks = new Vector<>(1);
+//    private final List<ConcurrencyManager> readLocks = new ArrayList<>(1);
+//    private final List<ConcurrencyManager> readLocks = new CopyOnWriteArrayList<>();
+//    private final Map<ConcurrencyManager, ConcurrencyManager> readLocks = new HashMap<>();
+    private final Map<ConcurrencyManager, ConcurrencyManager> readLocks = new LinkedHashMap<>();
 
     /**
      * We have seen that the read locks vector we have is very insufficient. We keep it for now due to the tracing code
@@ -59,7 +67,10 @@ public class ReadLockManager {
             final long currentThreadId = currentThread.getId();
             ReadLockAcquisitionMetadata readLockAcquisitionMetadata = ConcurrencyUtil.SINGLETON.createReadLockAcquisitionMetadata(concurrencyManager);
 
-            this.readLocks.add(FIRST_INDEX_OF_COLLECTION, concurrencyManager);
+//            this.readLocks.add(FIRST_INDEX_OF_COLLECTION, concurrencyManager);
+//          TODO RFELCMAN   Map switch
+            this.readLocks.put(concurrencyManager, concurrencyManager);
+
             if (!mapThreadToReadLockAcquisitionMetadata.containsKey(currentThreadId)) {
                 List<ReadLockAcquisitionMetadata> newList = Collections.synchronizedList(new ArrayList<>());
                 mapThreadToReadLockAcquisitionMetadata.put(currentThreadId, newList);
@@ -125,7 +136,9 @@ public class ReadLockManager {
     public List<ConcurrencyManager> getReadLocks() {
         instanceLock.lock();
         try {
-            return Collections.unmodifiableList(readLocks);
+//            return Collections.unmodifiableList(readLocks);
+//          TODO RFELCMAN   Map switch
+            return Collections.unmodifiableList(new ArrayList<>(readLocks.values()));
         } finally {
             instanceLock.unlock();
         }
@@ -189,7 +202,10 @@ public class ReadLockManager {
         instanceLock.lock();
         try {
             ReadLockManager clone = new ReadLockManager();
-            clone.readLocks.addAll(this.readLocks);
+//            clone.readLocks.addAll(this.readLocks);
+//          TODO RFELCMAN   Map switch
+            clone.readLocks.putAll(readLocks);
+
             for (Map.Entry<Long, List<ReadLockAcquisitionMetadata>> currentEntry : this.mapThreadToReadLockAcquisitionMetadata.entrySet()) {
                 Long key = currentEntry.getKey();
                 List<ReadLockAcquisitionMetadata> value = currentEntry.getValue();

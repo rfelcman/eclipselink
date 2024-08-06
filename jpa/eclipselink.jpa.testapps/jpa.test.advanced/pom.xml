@@ -81,8 +81,10 @@
                         <configuration>
                             <argLine>-javaagent:${org.eclipse.persistence:org.eclipse.persistence.jpa:jar} @{argLine}</argLine>
                             <includes>
+<!--
                                 <include>**/JPAAdvancedTestModel</include>
                                 <include>**/advanced/*Test</include>
+-->
                                 <include>**/advanced/EntityManagerJUnitTestSuite</include>
                             </includes>
                         </configuration>

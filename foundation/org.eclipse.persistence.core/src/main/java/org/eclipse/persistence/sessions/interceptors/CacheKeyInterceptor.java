@@ -32,8 +32,9 @@ public class CacheKeyInterceptor extends CacheKey{
         protected CacheKey wrappedKey;
 
         public CacheKeyInterceptor(CacheKey cacheKey){
+            super(cacheKey.getKey());
             wrappedKey = cacheKey;
-            this.isWrapper = true;
+            setIsWrapper(true);
         }
         /**
          * Acquire the lock on the cache key object.

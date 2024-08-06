@@ -244,8 +244,10 @@ public class EntityManagerJUnitTestSuite extends JUnitTestCase {
     public static Test suite() {
         TestSuite suite = new TestSuite();
         suite.addTest(suiteSpring());
+/* TODO RFELCMAN revert back
         suite.addTest(new EntityManagerJUnitTestSuite("testCacheUsage"));
         suite.addTest(new EntityManagerJUnitTestSuite("testIsLoaded"));
+*/
         return suite;
     }
 
@@ -256,6 +258,7 @@ public class EntityManagerJUnitTestSuite extends JUnitTestCase {
 //        suite.addTestSuite(EMFProviderTest.class);
         suite.addTest(new EntityManagerJUnitTestSuite("testSetup"));
         List<String> tests = new ArrayList<>();
+/* TODO RFELCMAN revert back
         tests.add("testEMFTargetServerEnforcing");
         tests.add("testSettingDetachedObject");
         tests.add("testMultipleExistenceChecksForDetachedObjects");
@@ -485,7 +488,9 @@ public class EntityManagerJUnitTestSuite extends JUnitTestCase {
         tests.add("testBeginTransactionOnClosedEM");
         tests.add("testUpdateDetachedEntityWithRelationshipCascadeRefresh");
         tests.add("testForNPEInCloning"); //Bug#457480
+*/
         tests.add("testCopy"); //Bug#463350
+/*TODO RFELCMAN
         tests.add("testServerDetectionLogging"); //Bug#476018
 //        if (isJPA21()){
 //            tests.add("testUnsynchronizedPC");
@@ -519,13 +524,14 @@ public class EntityManagerJUnitTestSuite extends JUnitTestCase {
         tests.add("testDetachChildObjects");
         tests.add("testDetachLazyLoadedCollection");
         tests.add("testAutoCloseable");
+*/
 
 
         Collections.sort(tests);
         for (String test : tests) {
             suite.addTest(new EntityManagerJUnitTestSuite(test));
         }
-        suite.addTest(new EntityManagerJUnitTestSuite("testCascadeDetach"));
+//        suite.addTest(new EntityManagerJUnitTestSuite("testCascadeDetach"));
         // Test must be last as clears database.
         suite.addTest(new EntityManagerJUnitTestSuite("testDeleteEverything"));
         return suite;

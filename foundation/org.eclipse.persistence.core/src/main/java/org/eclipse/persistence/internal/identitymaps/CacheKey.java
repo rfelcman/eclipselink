@@ -39,32 +39,32 @@ public class CacheKey extends ConcurrencyManager implements Cloneable {
     public final long CREATION_THREAD_HASHCODE = Thread.currentThread().hashCode();
 
     /** The key holds the vector of primary key values for the object. */
-    protected Object key;
+    private Object key;
 
-    protected Object object;
+    private Object object;
 
     //used to store a reference to the map this cachekey is in in cases where the
     //cache key is to be removed, prevents us from having to track down the owning
     //map
-    protected IdentityMap mapOwner;
+    private IdentityMap mapOwner;
 
     /** The writeLock value is being held as an object so that it might contain a number or timestamp. */
-    protected Object writeLockValue;
+    private Object writeLockValue;
 
     /** The cached wrapper for the object, used in EJB. */
-    protected Object wrapper;
+    private Object wrapper;
 
     /** This is used for Document Preservation to cache the record that this object was built from */
-    protected DataRecord dataRecord;
+    private DataRecord dataRecord;
 
     /** This attribute is the system time in milli seconds that the object was last refreshed on */
 
     //CR #4365
     // CR #2698903 - fix for the previous fix. No longer using millis.
-    protected long lastUpdatedQueryId;
+    private long lastUpdatedQueryId;
 
     /** Invalidation State can be used to indicate whether this cache key is considered valid */
-    protected int invalidationState = CHECK_INVALIDATION_POLICY;
+    private int invalidationState = CHECK_INVALIDATION_POLICY;
 
     /** The following constants are used for the invalidationState variable */
     public static final int CHECK_INVALIDATION_POLICY = 0;
@@ -74,44 +74,50 @@ public class CacheKey extends ConcurrencyManager implements Cloneable {
 
     /** The read time stores the millisecond value of the last time the object help by
     this cache key was confirmed as up to date. */
-    protected long readTime = 0;
+    private long readTime = 0;
 
     /**
      * Stores if this CacheKey instance is a wrapper for the underlying CacheKey.  CacheKey wrappers
      * may be used with cache interceptors.
      */
-    protected boolean isWrapper = false;
+    private boolean isWrapper = false;
 
     /**
      * Stores retrieved FK values for relationships that are not stored in the Entity
      */
-    protected AbstractRecord protectedForeignKeys;
+    private AbstractRecord protectedForeignKeys;
 
     /**
      * Set to true if this CacheKey comes from an IsolatedClientSession, or DatabaseSessionImpl.
      */
-    protected boolean isIsolated;
+    private boolean isIsolated;
 
     /**
      * The ID of the database transaction that last wrote the object.
      * This is used for database change notification.
      */
-    protected Object transactionId;
+    private Object transactionId;
 
     /**
      * Internal:
      * Only used by subclasses that may want to wrap the cache key.  Could be replaced
      * by switching to an interface.
      */
+/* TODO RFELCMAN remove if tests will pass
     protected CacheKey(){
     }
+*/
 
     public CacheKey(Object primaryKey) {
         this.key = primaryKey;
+        if (primaryKey == null) {
+            throw new RuntimeException("TODO RFELCMAN Primary key is null \n" +
+                    "primaryKey = " + primaryKey);
+        }
     }
 
     public CacheKey(Object primaryKey, Object object, Object lockValue) {
-        this.key = primaryKey;
+        this(primaryKey);
         this.writeLockValue = lockValue;
         //bug4649617  use setter instead of this.object = object to avoid hard reference on object in subclasses
         if (object != null) {
@@ -120,7 +126,7 @@ public class CacheKey extends ConcurrencyManager implements Cloneable {
     }
 
     public CacheKey(Object primaryKey, Object object, Object lockValue, long readTime, boolean isIsolated) {
-        this.key = primaryKey;
+        this(primaryKey);
         this.writeLockValue = lockValue;
         //bug4649617  use setter instead of this.object = object to avoid hard reference on object in subclasses
         if (object != null) {

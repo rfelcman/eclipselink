@@ -104,13 +104,19 @@ public class CacheKey extends ConcurrencyManager implements Cloneable {
      * by switching to an interface.
      */
     protected CacheKey(){
+        //TODO RFELCMAN
+        logNullPrimaryKey(null);
     }
 
     public CacheKey(Object primaryKey) {
+        //TODO RFELCMAN
+        logNullPrimaryKey(primaryKey);
         this.key = primaryKey;
     }
 
     public CacheKey(Object primaryKey, Object object, Object lockValue) {
+        //TODO RFELCMAN
+        logNullPrimaryKey(primaryKey);
         this.key = primaryKey;
         this.writeLockValue = lockValue;
         //bug4649617  use setter instead of this.object = object to avoid hard reference on object in subclasses
@@ -120,6 +126,8 @@ public class CacheKey extends ConcurrencyManager implements Cloneable {
     }
 
     public CacheKey(Object primaryKey, Object object, Object lockValue, long readTime, boolean isIsolated) {
+        //TODO RFELCMAN
+        logNullPrimaryKey(primaryKey);
         this.key = primaryKey;
         this.writeLockValue = lockValue;
         //bug4649617  use setter instead of this.object = object to avoid hard reference on object in subclasses
@@ -536,6 +544,8 @@ public class CacheKey extends ConcurrencyManager implements Cloneable {
     }
 
     public void setKey(Object key) {
+        //TODO RFELCMAN
+        logNullPrimaryKey(key);
         this.key = key;
     }
 
@@ -623,6 +633,16 @@ public class CacheKey extends ConcurrencyManager implements Cloneable {
             return this.object;
         } finally {
             getInstanceLock().unlock();
+        }
+    }
+
+    public void logNullPrimaryKey(Object primaryKey) {
+        if (primaryKey == null) {
+            System.out.println("######Primary key is null - BEGIN######");
+            for (StackTraceElement ste : Thread.currentThread().getStackTrace()) {
+                System.out.println(ste);
+            }
+            System.out.println("######Primary key is null - END######");
         }
     }
 }

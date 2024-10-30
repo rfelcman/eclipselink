@@ -216,7 +216,6 @@ public class FullIdentityMap extends AbstractIdentityMap {
         //TODO RFELCMAN
         logNullPrimaryKey(primaryKey, object);
 
-
         CacheKey newCacheKey = createCacheKey(primaryKey, object, writeLockValue, readTime);
         // Find the cache key in the map, reset it, or put the new one.
         CacheKey cacheKey = putCacheKeyIfAbsent(newCacheKey);

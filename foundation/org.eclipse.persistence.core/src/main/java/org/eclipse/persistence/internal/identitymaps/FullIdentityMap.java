@@ -213,6 +213,9 @@ public class FullIdentityMap extends AbstractIdentityMap {
      */
     @Override
     public CacheKey put(Object primaryKey, Object object, Object writeLockValue, long readTime) {
+        //TODO RFELCMAN
+        logNullPrimaryKey(primaryKey, object);
+
         CacheKey newCacheKey = createCacheKey(primaryKey, object, writeLockValue, readTime);
         // Find the cache key in the map, reset it, or put the new one.
         CacheKey cacheKey = putCacheKeyIfAbsent(newCacheKey);
@@ -259,5 +262,16 @@ public class FullIdentityMap extends AbstractIdentityMap {
 
     protected void setCacheKeys(Map<Object, CacheKey> cacheKeys) {
         this.cacheKeys = cacheKeys;
+    }
+
+    public void logNullPrimaryKey(Object primaryKey, Object object) {
+        if (primaryKey == null) {
+            System.out.println("######Primary key is null - BEGIN######");
+            System.out.println("###Object: " + object + "###");
+            for (StackTraceElement ste : Thread.currentThread().getStackTrace()) {
+                System.out.println(ste);
+            }
+            System.out.println("######Primary key is null - END######");
+        }
     }
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 1998, 2021 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 1998, 2024 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -88,6 +88,7 @@ public class CanonicalModelProcessor extends AbstractProcessor {
     private static final Set<String> SUPPORTED_ANNOTATIONS = Collections.unmodifiableSet(new HashSet<String>() {{
         if (SourceVersion.latest().compareTo(SourceVersion.RELEASE_8) > 0) {
             add("java.persistence/jakarta.persistence.*");
+            add("jakarta.persistence/jakarta.persistence.*");
         }
         add("jakarta.persistence.*");
         add("org.eclipse.persistence.annotations.*");

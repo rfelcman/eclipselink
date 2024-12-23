@@ -31,9 +31,9 @@ import org.eclipse.persistence.logging.AbstractSessionLog;
 import org.eclipse.persistence.logging.SessionLog;
 import org.eclipse.persistence.sessions.DatabaseSession;
 import org.eclipse.persistence.sessions.IdentityMapAccessor;
-import org.eclipse.persistence.testing.framework.junit.JUnitTestCase;
-import org.eclipse.persistence.testing.framework.server.JEEPlatform;
-import org.eclipse.persistence.testing.framework.server.ServerPlatform;
+import org.eclipse.persistence.testing.framework.jpa.junit.JUnitTestCase;
+import org.eclipse.persistence.testing.framework.jpa.server.JEEPlatform;
+import org.eclipse.persistence.testing.framework.jpa.server.ServerPlatform;
 
 public class EntityManagerHelper {
 

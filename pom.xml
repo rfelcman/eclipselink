@@ -200,6 +200,7 @@
         <apache.felix.framework.version>7.0.0</apache.felix.framework.version>
         <!-- CQ #21133 -->
         <ant.version>1.10.12</ant.version>
+        <aspectj.version>1.9.19</aspectj.version>
         <commonj.sdo.version>2.1.1</commonj.sdo.version>
         <derby.version>10.14.2.0</derby.version>
         <!-- CQ #21134, 21135, 21136, 21137 -->
@@ -840,6 +841,16 @@
             </dependency>
             <!--APIs and other libs used in test classes-->
             <dependency>
+                <groupId>org.aspectj</groupId>
+                <artifactId>aspectjrt</artifactId>
+                <version>${aspectj.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.aspectj</groupId>
+                <artifactId>aspectjweaver</artifactId>
+                <version>${aspectj.version}</version>
+            </dependency>
+            <dependency>
                 <groupId>org.jboss.weld.se</groupId>
                 <artifactId>weld-se-core</artifactId>
                 <version>${weld-se.version}</version>
@@ -1146,6 +1157,12 @@
                     <groupId>org.reficio</groupId>
                     <artifactId>p2-maven-plugin</artifactId>
                     <version>1.5.0</version>
+                </plugin>
+                <plugin>
+                    <!-- see https://github.com/eclipse-ee4j/eclipselink-build-support -->
+                    <groupId>org.eclipse.persistence</groupId>
+                    <artifactId>eclipselink-testbuild-plugin</artifactId>
+                    <version>1.1.0</version>
                 </plugin>
                 <plugin>
                     <groupId>org.carlspring.maven</groupId>
@@ -1490,11 +1507,16 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
-                <configuration>
-                    <archive>
-                        <manifestFile>${project.build.outputDirectory}/META-INF/MANIFEST.MF</manifestFile>
-                    </archive>
-                </configuration>
+                <executions>
+                    <execution>
+                        <id>default-jar</id>
+                        <configuration>
+                            <archive>
+                                <manifestFile>${project.build.outputDirectory}/META-INF/MANIFEST.MF</manifestFile>
+                            </archive>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
             <!--Create jar file with source files and manifest with OSGi entries-->
             <plugin>
@@ -1896,8 +1918,6 @@
                 <!--JPA test modules-->
                 <!--JPA test module (JSE, JEE tests)-->
                 <module>jpa/eclipselink.jpa.test</module>
-                <!--JPA NoSQL test module-->
-                <module>jpa/eclipselink.jpa.nosql.test</module>
                 <!--JPA JSE test module-->
                 <module>jpa/eclipselink.jpa.test.jse</module>
                 <!--JPA Spring test module-->
@@ -1914,6 +1934,10 @@
                 <module>utils/eclipselink.dbws.builder.test.oracle.server</module>
 
                 <module>utils/eclipselink.utils.sigcompare</module>
+                <!-- testapps -->
+                <module>jpa/eclipselink.jpa.testapps</module>
+                <module>jpa/eclipselink.jpa.testapps.nosql</module>
+                <module>jpa/eclipselink.jpa.testapps.oracle</module>
             </modules>
         </profile>
         <profile>

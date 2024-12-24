@@ -34,6 +34,7 @@ import org.eclipse.persistence.testing.framework.TestCase;
 import org.eclipse.persistence.testing.framework.TestErrorException;
 import org.eclipse.persistence.testing.framework.TestProblemException;
 import org.eclipse.persistence.testing.framework.TestWarningException;
+import org.eclipse.persistence.testing.framework.oracle.ProxyAuthenticationUsersAndProperties;
 import org.eclipse.persistence.testing.framework.oracle.SessionExchanger;
 
 import oracle.jdbc.OracleConnection;

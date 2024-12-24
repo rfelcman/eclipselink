@@ -42,6 +42,22 @@
             <artifactId>org.eclipse.persistence.core</artifactId>
             <scope>provided</scope>
         </dependency>
+        <!-- Oracle DB specific -->
+        <dependency>
+            <groupId>org.eclipse.persistence</groupId>
+            <artifactId>org.eclipse.persistence.oracle</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.oracle.database.jdbc</groupId>
+            <artifactId>ojdbc8</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.oracle.database.jdbc</groupId>
+            <artifactId>ucp</artifactId>
+            <scope>provided</scope>
+        </dependency>
         <!--Test framework-->
         <dependency>
             <groupId>junit</groupId>

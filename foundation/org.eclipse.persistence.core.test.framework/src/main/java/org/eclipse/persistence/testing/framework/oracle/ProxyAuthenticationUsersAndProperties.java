@@ -13,7 +13,7 @@
 // Contributors:
 //     05/28/2008-1.0M8 Andrei Ilitchev.
 //       - New file introduced for bug 224964: Provide support for Proxy Authentication through JPA.
-package org.eclipse.persistence.testing.tests.proxyauthentication.thin;
+package org.eclipse.persistence.testing.framework.oracle;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -23,7 +23,6 @@ import oracle.jdbc.OracleConnection;
 
 import org.eclipse.persistence.config.PersistenceUnitProperties;
 import org.eclipse.persistence.sessions.DatabaseSession;
-import org.eclipse.persistence.testing.framework.oracle.SessionExchanger;
 
 /**
  * Initializes and holds user names and properties used by for thin and jpa ProxyAuthentication tests.

@@ -18,6 +18,7 @@ package org.eclipse.persistence.testing.tests.proxyauthentication.thin;
 import java.util.Map;
 import org.eclipse.persistence.sessions.DatabaseSession;
 import org.eclipse.persistence.testing.framework.*;
+import org.eclipse.persistence.testing.framework.oracle.ProxyAuthenticationUsersAndProperties;
 
 /**
  * TestModel for Proxy Authentication using Oracle thin driver (10.1.0.2 or later).

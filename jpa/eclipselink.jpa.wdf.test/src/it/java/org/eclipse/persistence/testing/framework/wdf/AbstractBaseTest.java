@@ -50,7 +50,7 @@ import org.eclipse.persistence.config.PersistenceUnitProperties;
 import org.eclipse.persistence.testing.framework.junit.JUnitTestCaseHelper;
 import org.eclipse.persistence.testing.framework.server.JEEPlatform;
 import org.eclipse.persistence.testing.framework.server.ServerPlatform;
-import org.eclipse.persistence.testing.tests.feature.TestDataSource;
+import org.eclipse.persistence.testing.framework.TestDataSource;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.runner.RunWith;

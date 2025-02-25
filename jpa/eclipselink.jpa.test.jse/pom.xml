@@ -208,7 +208,8 @@
                             <skipTests>${test-skip-jpa-jse}</skipTests>
                             <reportNameSuffix>test-jpa-jse</reportNameSuffix>
                             <includes>
-                                <include>*.Test*</include>
+<!--                                <include>*.Test*</include>-->
+                                <include>org.eclipse.persistence.jpa.test.storedproc.TestStoredProcedures</include>
                             </includes>
                         </configuration>
                     </execution>

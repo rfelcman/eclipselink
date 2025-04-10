@@ -57,7 +57,6 @@ import org.eclipse.persistence.internal.helper.DatabaseTable;
 import org.eclipse.persistence.internal.helper.InvalidObject;
 import org.eclipse.persistence.internal.helper.NonSynchronizedVector;
 import org.eclipse.persistence.internal.identitymaps.CacheKey;
-import org.eclipse.persistence.internal.oxm.mappings.Mapping;
 import org.eclipse.persistence.internal.sessions.AbstractRecord;
 import org.eclipse.persistence.internal.sessions.AbstractSession;
 import org.eclipse.persistence.internal.sessions.UnitOfWorkImpl;
@@ -2061,7 +2060,8 @@ public class ExpressionQueryMechanism extends StatementQueryMechanism {
                 int fieldsSize = fields.size();
                 values = new ArrayList<>(fieldsSize);
                 baseExpressions = new ArrayList<>(fieldsSize);
-                for(DatabaseMapping databaseMapping: mapping.getReferenceDescriptor().getMappings()) {
+                //TODO RFELCMAN collect all mappings recursively
+                for(DatabaseMapping databaseMapping: getEmbeddableMappings(mapping.getReferenceDescriptor())) {
                     String aName = databaseMapping.getAttributeName();
                     Expression attributeBaseExpression = baseExpression.get(aName);
                     baseExpressions.add(attributeBaseExpression);
@@ -2431,6 +2431,24 @@ public class ExpressionQueryMechanism extends StatementQueryMechanism {
 
         ((UpdateAllQuery)getQuery()).setIsPreparedUsingTempStorage(false);
         super.prepareUpdateAll();
+    }
+
+    private List<DatabaseMapping> getEmbeddableMappings(ClassDescriptor descriptor) {
+        List<DatabaseMapping> mappings = new ArrayList<>();
+        collectEmbeddableMappings(mappings, descriptor);
+        return mappings;
+    }
+
+    private void collectEmbeddableMappings(List<DatabaseMapping> mappings, ClassDescriptor descriptor) {
+        for(DatabaseMapping mapping : descriptor.getMappings()) {
+           if (mapping.isAggregateMapping()) {
+               //TODO RFELCMAN ???? Nested aggregated/embedable
+               mappings.add(mapping);
+               collectEmbeddableMappings(mappings, mapping.getReferenceDescriptor());
+           } else {
+               mappings.add(mapping);
+           }
+        }
     }
 
     protected SQLSelectStatement createSQLSelectStatementForUpdateAllForOracleAnonymousBlock(Map<DatabaseTable, Map<DatabaseField, Expression>> tables_databaseFieldsToValues)

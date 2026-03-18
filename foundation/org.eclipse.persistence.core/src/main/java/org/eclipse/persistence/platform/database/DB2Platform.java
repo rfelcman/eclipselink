@@ -1,7 +1,7 @@
 /*
  * Copyright (c) 2025 Contributors to the Eclipse Foundation.
  * Copyright (c) 1998, 2026 Oracle and/or its affiliates. All rights reserved.
- * Copyright (c) 1998, 2025 IBM Corporation. All rights reserved.
+ * Copyright (c) 1998, 2026 IBM Corporation. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -1972,7 +1972,7 @@ public class DB2Platform extends DatabasePlatform {
     public void printFieldTypeSize(Writer writer, FieldDefinition field, FieldDefinition.DatabaseType ftd) throws IOException {
         super.printFieldTypeSize(writer, field, ftd);
         String suffix = ftd.suffix();
-        if (suffix != null) {
+        if (suffix != null && !suffix.isEmpty()) {
             writer.append(" ").append(suffix);
         }
     }

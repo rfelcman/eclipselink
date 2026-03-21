@@ -1,4 +1,5 @@
 /*
+ * Copyright (c) 2026 Contributors to the Eclipse Foundation. All rights reserved.
  * Copyright (c) 2011, 2024 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
@@ -12,7 +13,7 @@
 
 // Contributors:
 //     Oracle - initial API and implementation from Oracle TopLink
- package org.eclipse.persistence.testing.tests.jpa.performance;
+package org.eclipse.persistence.testing.tests.jpa.performance;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.spi.PersistenceProvider;
@@ -25,6 +26,7 @@ import org.eclipse.persistence.jpa.JpaEntityManager;
 import org.eclipse.persistence.queries.ReadAllQuery;
 import org.eclipse.persistence.sessions.Session;
 import org.eclipse.persistence.sessions.server.ServerSession;
+import org.eclipse.persistence.testing.dbdriver.emulateddb.EmulatedDriver;
 import org.eclipse.persistence.testing.framework.PerformanceComparisonTestCase;
 import org.eclipse.persistence.testing.framework.TestCase;
 import org.eclipse.persistence.testing.framework.TestModel;
@@ -38,7 +40,6 @@ import org.eclipse.persistence.testing.models.jpa.performance.LargeProject;
 import org.eclipse.persistence.testing.models.jpa.performance.PhoneNumber;
 import org.eclipse.persistence.testing.models.jpa.performance.Project;
 import org.eclipse.persistence.testing.models.jpa.performance.SmallProject;
-import org.eclipse.persistence.testing.tests.performance.emulateddb.EmulatedDriver;
 
 import java.util.HashMap;
 import java.util.List;
@@ -189,7 +190,7 @@ public class JPAPerformanceComparisonModel extends TestModel {
         try {
             Class.forName(getSession().getLogin().getDriverClassName());
         } catch (Exception ignore) {}
-        properties.put("eclipselink.jdbc.driver", "org.eclipse.persistence.testing.tests.performance.emulateddb.EmulatedDriver");
+        properties.put("eclipselink.jdbc.driver", "org.eclipse.persistence.testing.dbdriver.emulateddb.EmulatedDriver");
         properties.put("eclipselink.jdbc.url", "emulate:" + getSession().getLogin().getConnectionString());
         properties.put("eclipselink.jdbc.user", getSession().getLogin().getUserName());
         properties.put("eclipselink.jdbc.password", getSession().getLogin().getPassword());*/

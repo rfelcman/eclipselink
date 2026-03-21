@@ -1,4 +1,5 @@
 /*
+ * Copyright (c) 2026 Contributors to the Eclipse Foundation. All rights reserved.
  * Copyright (c) 2011, 2024 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
@@ -12,11 +13,12 @@
 
 // Contributors:
 //     Oracle - initial API and implementation
- package org.eclipse.persistence.testing.tests.jpa.performance2;
+package org.eclipse.persistence.testing.tests.jpa.performance2;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.spi.PersistenceProvider;
 import org.eclipse.persistence.jpa.JpaEntityManager;
+import org.eclipse.persistence.testing.dbdriver.emulateddb.EmulatedDriver;
 import org.eclipse.persistence.testing.framework.TestProblemException;
 import org.eclipse.persistence.testing.framework.TestSuite;
 import org.eclipse.persistence.testing.framework.jpa.junit.JUnitTestCase;
@@ -42,7 +44,6 @@ import org.eclipse.persistence.testing.tests.jpa.performance2.writing.JPA2Insert
 import org.eclipse.persistence.testing.tests.jpa.performance2.writing.JPA2InsertEmployeePerformanceComparisonTest;
 import org.eclipse.persistence.testing.tests.jpa.performance2.writing.JPA2MassInsertEmployeePerformanceComparisonTest;
 import org.eclipse.persistence.testing.tests.jpa.performance2.writing.JPA2UpdateEmployeePerformanceComparisonTest;
-import org.eclipse.persistence.testing.tests.performance.emulateddb.EmulatedDriver;
 
 import java.util.Map;
 

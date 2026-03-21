@@ -277,7 +277,8 @@ public abstract class PerformanceComparisonTestCase extends TestCase implements 
             Class.forName(login.getDriverClassName());
         } catch (Exception ignore) {}
         //login.useDirectDriverConnect();
-        login.setDriverClass(org.eclipse.persistence.testing.tests.performance.emulateddb.EmulatedDriver.class);
+//        login.setDriverClass(org.eclipse.persistence.testing.tests.performance.emulateddb.EmulatedDriver.class);
+        login.setDriverClassName("org.eclipse.persistence.testing.tests.performance.emulateddb.EmulatedDriver");
         login.setConnectionString("emulate:" + login.getConnectionString());
         project.setLogin(login);
         DatabaseSession session = project.createDatabaseSession();

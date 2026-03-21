@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2025 Contributors to the Eclipse Foundation.
+ * Copyright (c) 2025, 2026 Contributors to the Eclipse Foundation. All rights reserved.
  * Copyright (c) 1998, 2024 Oracle and/or its affiliates. All rights reserved.
  * Copyright (c) 1998, 2024 IBM Corporation. All rights reserved.
  *
@@ -144,8 +144,8 @@ import org.eclipse.persistence.sessions.server.ConnectionPolicy;
 import org.eclipse.persistence.sessions.server.ConnectionPool;
 import org.eclipse.persistence.sessions.server.ReadConnectionPool;
 import org.eclipse.persistence.sessions.server.ServerSession;
-import org.eclipse.persistence.testing.framework.ConnectionWrapper;
-import org.eclipse.persistence.testing.framework.DriverWrapper;
+import org.eclipse.persistence.testing.dbdriver.wrapper.ConnectionWrapper;
+import org.eclipse.persistence.testing.dbdriver.wrapper.DriverWrapper;
 import org.eclipse.persistence.testing.framework.QuerySQLTracker;
 import org.eclipse.persistence.testing.framework.SimpleSessionLogWrapper;
 import org.eclipse.persistence.testing.framework.TestDataSource;

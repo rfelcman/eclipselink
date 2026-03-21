@@ -81,6 +81,11 @@
         </dependency>
         <!--JDBC driver (test dependency)-->
         <dependency>
+            <groupId>org.eclipse.persistence</groupId>
+            <artifactId>org.eclipse.persistence.core.test.dbdriver</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
             <groupId>${db.driver.groupId}</groupId>
             <artifactId>${db.driver.artifactId}</artifactId>
             <version>${db.driver.version}</version>

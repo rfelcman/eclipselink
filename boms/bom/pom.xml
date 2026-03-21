@@ -167,6 +167,12 @@
 
             <dependency>
                 <groupId>org.eclipse.persistence</groupId>
+                <artifactId>org.eclipse.persistence.core.test.dbdriver</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.eclipse.persistence</groupId>
                 <artifactId>org.eclipse.persistence.jpa.test.framework</artifactId>
                 <version>${project.version}</version>
             </dependency>

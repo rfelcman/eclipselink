@@ -1,5 +1,6 @@
 /*
- * Copyright (c) 1998, 2024 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2026 Contributors to the Eclipse Foundation. All rights reserved.
+ * Copyright (c) 1998, 2022 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -12,86 +13,84 @@
 
 // Contributors:
 //     Oracle - initial API and implementation from Oracle TopLink
- package org.eclipse.persistence.testing.tests.junit.failover.emulateddriver;
+package org.eclipse.persistence.testing.dbdriver.emulateddb;
 
-import java.sql.*;
+import java.sql.ResultSetMetaData;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
-import org.eclipse.persistence.sessions.DatabaseRecord;
-
-public class EmulatedResultSetMetaData implements ResultSetMetaData {
+/**
+ * Emulated database result set metadata.
+ * This extracts columns from a list of DatabaseRows.
+ */
+class EmulatedResultSetMetaData implements ResultSetMetaData {
 
     protected EmulatedResultSet resultSet;
 
-    public EmulatedResultSetMetaData(EmulatedResultSet resultSet) {
+    EmulatedResultSetMetaData(EmulatedResultSet resultSet) {
         this.resultSet = resultSet;
     }
 
-
     @Override
     public int getColumnCount() {
-        return ((DatabaseRecord)resultSet.getRows().get(0)).getFields().size();
+        if (resultSet.getRows().isEmpty()) {
+            // TODO: why is this if?
+            return 1;
+        }
+        return resultSet.getRows().get(0).size();
     }
-
 
     @Override
     public boolean isAutoIncrement(int column) {
         return false;
     }
 
-
     @Override
     public boolean isCaseSensitive(int column) {
         return true;
     }
-
 
     @Override
     public boolean isSearchable(int column) {
         return true;
     }
 
-
     @Override
     public boolean isCurrency(int column) {
         return false;
     }
 
-
     @Override
     public int isNullable(int column) {
-        return 0;
+        return ResultSetMetaData.columnNoNulls;
     }
-
 
     @Override
     public boolean isSigned(int column) {
         return true;
     }
 
-
     @Override
     public int getColumnDisplaySize(int column) {
         return 0;
     }
-
 
     @Override
     public String getColumnLabel(int column) {
         return "";
     }
 
-
     @Override
     public String getColumnName(int column) {
-        return ((DatabaseRecord)resultSet.getRows().get(0)).getFields().get(column - 1).getName();
+        final Set<List<?>> keySet = resultSet.getRows().get(0).keySet();
+        return new ArrayList<>(keySet).get(column - 1).toString();
     }
-
 
     @Override
     public String getSchemaName(int column) {
         return "";
     }
-
 
     @Override
     public int getPrecision(int column) {
@@ -144,13 +143,12 @@ public class EmulatedResultSetMetaData implements ResultSetMetaData {
     }
 
     @Override
-    public boolean isWrapperFor(Class<?> iFace) throws SQLException{
+    public boolean isWrapperFor(Class<?> iFace) {
         return false;
     }
 
     @Override
-    public <T>T unwrap(Class<T> iFace)  throws SQLException {
+    public <T>T unwrap(Class<T> iFace) {
         return iFace.cast(this);
     }
-
 }

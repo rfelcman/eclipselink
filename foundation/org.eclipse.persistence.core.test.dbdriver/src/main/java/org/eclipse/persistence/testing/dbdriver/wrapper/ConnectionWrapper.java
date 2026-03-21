@@ -1,4 +1,5 @@
 /*
+ * Copyright (c) 2026 Contributors to the Eclipse Foundation. All rights reserved.
  * Copyright (c) 1998, 2022 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
@@ -13,7 +14,7 @@
 // Contributors:
 //     ailitchev - Bug 256296: Reconnect fails when session loses connectivity;
 //                 Bug 256284: Closing an EMF where the database is unavailable results in deployment exception on redeploy.
-package org.eclipse.persistence.testing.framework;
+package org.eclipse.persistence.testing.dbdriver.wrapper;
 
 import java.sql.Array;
 import java.sql.Blob;
@@ -29,54 +30,10 @@ import java.sql.SQLXML;
 import java.sql.Savepoint;
 import java.sql.Statement;
 import java.sql.Struct;
+import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.Executor;
-/*
- * DriverWrapper works together with ConnectionWrapper.
- * This pair of classes allows to intercept calls to Driver and Connection methods.
- * DriverWrapper can imitate both the db going down (or losing network connection to it),
- * and coming back up (or network connection restored).
- * ConnectionWrapper have the same functionality, but applied to a single connection.
- *
- * There's an example of ConnectionWrapper usage in EntityManagerJUnitTestSuite:
- * testEMCloseAndOpen and testEMFactoryCloseAndOpen.
- *
- * To use DriverWrapper in jpa, initialize DriverWrapper - all methods are static - with the original driver name.
- *
- * Then create EMF, using PersistenceUnit properties, substitute:
- * the original driver class for DriverWrapper (optional) and
- * the original url for "coded" (':' substituted for'*') url (otherwise DriverWrapper would not be called - the original driver would).
- * If created EMF uses DriverWrapper it will print out connection string that looks like "jdbc*oracle*thin*@localhost*1521*orcl".
- *
- * DriverWrapper just passes all the calls to the wrapped driver (the one passed to initialize method):
- * connect method wraps the created connection into ConnectionWrapper and caches them.
- *
- * Unless any of "break" methods called it should function in exactly the same way as original driver, the same for connections, too.
- *
- * But of course real fun is in breaking:
- * breakDriver breaks all the methods (that throw SQLException) of the Driver;
- * brealOldConnections breaks all connections produced so far;
- * breakNewConnections ensures that all newly produced connections are broken.
- *
- * Any method called on broken connection results in SQLException.
- *
- * The simple scenarios used in both EntityManagerJUnitTestSuite tests is imitation of db going down, then coming back:
- * going down: call breakDriver and breakOldConnections (calling breakNewConnections is possible but won't add anything -
- * as long as driver is broken there will be no new connections);
- * coming back: call repairDriver - now new functional new connections could be created, but all old connections are still broken.
- *
- * Also you can also break / repair individual connection.
- * If, say breakOldConnections was performed on DriwerWrapper and repair on ConnectionWrapper the chronologically last call wins.
- * There's no harm in breaking (or repairing) several times in a row.
- *
- * You can pass custom exception string to each break method, otherwise defaults used (the string will be in SQLException, also visible in debugger).
- *
- * Another usage that seems useful: stepping through the code in debugger you can trigger SQLException
- * to be thrown by any Connection method at will
- * be setting broken flag on ConnectionWrapper to true.
- *
- * After the EMF using DriverWrapper is closed, call DriverWrapper.clear() to forget the wrapped driver and clear all the cached ConnectionWrappers.
- */
+
 public class ConnectionWrapper implements Connection {
 
     Connection conn;
@@ -109,9 +66,6 @@ public class ConnectionWrapper implements Connection {
         return exceptionString;
     }
 
-    /*
-     * The following methods implement Connection interface
-     */
     @Override
     public Statement createStatement() throws SQLException {
         if(broken) {
@@ -289,7 +243,7 @@ public class ConnectionWrapper implements Connection {
     }
 
     @Override
-    public java.util.Map<String,Class<?>> getTypeMap() throws SQLException {
+    public Map<String,Class<?>> getTypeMap() throws SQLException {
         if(broken) {
             throw new SQLException(getExceptionString());
         }
@@ -297,7 +251,7 @@ public class ConnectionWrapper implements Connection {
     }
 
     @Override
-    public void setTypeMap(java.util.Map<String,Class<?>> map) throws SQLException {
+    public void setTypeMap(Map<String,Class<?>> map) throws SQLException {
         if(broken) {
             throw new SQLException(getExceptionString());
         }
@@ -405,8 +359,6 @@ public class ConnectionWrapper implements Connection {
         return conn.prepareStatement(sql, columnNames);
     }
 
-    // 236070: Methods introduced in JDK 1.6 (stolen from EmulatedConnection).
-    // Those *must* be no-op as long as this code should compile under jdk 1.5
     @Override
     public Array createArrayOf(String typeName, Object[] elements) {
         return null;

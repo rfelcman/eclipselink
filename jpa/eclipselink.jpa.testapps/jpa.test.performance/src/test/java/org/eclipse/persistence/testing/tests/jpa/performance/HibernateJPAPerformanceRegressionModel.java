@@ -1,4 +1,5 @@
 /*
+ * Copyright (c) 2026 Contributors to the Eclipse Foundation. All rights reserved.
  * Copyright (c) 1998, 2022 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
@@ -12,7 +13,7 @@
 
 // Contributors:
 //     Oracle - initial API and implementation from Oracle TopLink
- package org.eclipse.persistence.testing.tests.jpa.performance;
+package org.eclipse.persistence.testing.tests.jpa.performance;
 
 import jakarta.persistence.spi.PersistenceProvider;
 import org.eclipse.persistence.logging.SessionLog;
@@ -59,7 +60,7 @@ public class HibernateJPAPerformanceRegressionModel extends JPAPerformanceRegres
         try {
             Class.forName(getSession().getLogin().getDriverClassName());
         } catch (Exception ignore) {}
-        properties.put("hibernate.connection.driver_class", "org.eclipse.persistence.testing.tests.performance.emulateddb.EmulatedDriver");
+        properties.put("hibernate.connection.driver_class", "org.eclipse.persistence.testing.dbdriver.emulateddb.EmulatedDriver");
         properties.put("hibernate.connection.url", "emulate:" + getSession().getLogin().getConnectionString());
         properties.put("hibernate.connection.username", getSession().getLogin().getUserName());
         properties.put("hibernate.connection.password", getSession().getLogin().getPassword());

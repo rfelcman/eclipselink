@@ -127,14 +127,17 @@ public class EmulatedStatement implements PreparedStatement {
 
     @Override
     public void setBoolean(int parameterIndex, boolean x) {
+        setObject(parameterIndex, x);
     }
 
     @Override
     public void setByte(int parameterIndex, byte x) {
+        setObject(parameterIndex, x);
     }
 
     @Override
     public void setShort(int parameterIndex, short x) {
+        setObject(parameterIndex, x);
     }
 
     @Override
@@ -159,6 +162,7 @@ public class EmulatedStatement implements PreparedStatement {
 
     @Override
     public void setBigDecimal(int parameterIndex, BigDecimal x) {
+        setObject(parameterIndex, x);
     }
 
     @Override
@@ -201,6 +205,7 @@ public class EmulatedStatement implements PreparedStatement {
 
     @Override
     public void clearParameters() {
+        parameters.clear();
     }
 
     //----------------------------------------------------------------------

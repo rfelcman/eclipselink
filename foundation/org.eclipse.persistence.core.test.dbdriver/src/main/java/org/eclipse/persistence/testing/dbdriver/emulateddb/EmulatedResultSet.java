@@ -80,17 +80,20 @@ class EmulatedResultSet implements ResultSet {
 
     @Override
     public boolean getBoolean(int columnIndex) {
-        return (Boolean) getObject(columnIndex);
+        Boolean value = (Boolean) getObject(columnIndex);
+        return value != null && value;
     }
 
     @Override
     public byte getByte(int columnIndex) {
-        return ((Number)getObject(columnIndex)).byteValue();
+        Number value = (Number)getObject(columnIndex);
+        return value == null ? 0 : value.byteValue();
     }
 
     @Override
     public short getShort(int columnIndex) {
-        return ((Number)getObject(columnIndex)).shortValue();
+        Number value = (Number)getObject(columnIndex);
+        return value == null ? 0 : value.shortValue();
     }
 
     @Override

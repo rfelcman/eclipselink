@@ -295,7 +295,7 @@ public class ConnectionWrapper implements Connection {
         if(broken) {
             throw new SQLException(getExceptionString());
         }
-        conn.rollback();
+        conn.rollback(savepoint);
     }
 
     @Override

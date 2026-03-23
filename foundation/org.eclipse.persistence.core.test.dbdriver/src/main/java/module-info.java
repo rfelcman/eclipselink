@@ -12,8 +12,8 @@
 module org.eclipse.persistence.test.dbdriver {
     requires transitive java.sql;
 
-    exports org.eclipse.persistence.testing.dbdriver.wrapper;
     exports org.eclipse.persistence.testing.dbdriver.emulateddb;
+    exports org.eclipse.persistence.testing.dbdriver.wrapper;
 
     provides java.sql.Driver with
             org.eclipse.persistence.testing.dbdriver.emulateddb.EmulatedDriver,

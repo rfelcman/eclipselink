@@ -773,7 +773,7 @@ class EmulatedDatabaseMetaData implements DatabaseMetaData {
 
     @Override
     public Connection getConnection() {
-        return null;
+        return connection;
     }
 
     @Override

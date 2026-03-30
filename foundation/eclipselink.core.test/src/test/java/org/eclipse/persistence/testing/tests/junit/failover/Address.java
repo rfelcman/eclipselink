@@ -1,4 +1,5 @@
 /*
+ * Copyright (c) 2026 Contributors to the Eclipse Foundation. All rights reserved.
  * Copyright (c) 2018, 2024 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
@@ -15,6 +16,9 @@
 package org.eclipse.persistence.testing.tests.junit.failover;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import java.util.Vector;
 
 import org.eclipse.persistence.descriptors.ClassDescriptor;
@@ -22,7 +26,6 @@ import org.eclipse.persistence.descriptors.RelationalDescriptor;
 import org.eclipse.persistence.internal.helper.DatabaseField;
 import org.eclipse.persistence.internal.sessions.ArrayRecord;
 import org.eclipse.persistence.mappings.DirectToFieldMapping;
-import org.eclipse.persistence.sessions.DatabaseRecord;
 
 public final class Address {
 
@@ -98,8 +101,8 @@ public final class Address {
         return "SELECT ADDRESS_ID, CITY, COUNTRY, P_CODE, PROVINCE, STREET FROM ADDRESS";
     }
 
-    static Vector<DatabaseRecord> getData(ClassDescriptor desc) {
-        Vector<DatabaseRecord> rows = new Vector<>();
+    static List<Map<List<?>, List<?>>> getData(ClassDescriptor desc) {
+        List<Map<List<?>, List<?>>> rows = new ArrayList<>();
         Vector<DatabaseField> fields = new Vector<>(desc.getAllFields());
         DatabaseField[] fieldsArray = fields.toArray(new DatabaseField[0]);
         rows.add(new ArrayRecord(fields, fieldsArray, new Object[] {51, "Calgary", "Canada", "J5J2B5", "ALB", "1111 Moose Rd." }));

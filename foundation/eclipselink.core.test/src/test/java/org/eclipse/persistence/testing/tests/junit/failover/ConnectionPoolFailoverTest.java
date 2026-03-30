@@ -1,4 +1,5 @@
 /*
+ * Copyright (c) 2026 Contributors to the Eclipse Foundation. All rights reserved.
  * Copyright (c) 1998, 2024 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
@@ -22,8 +23,8 @@ import org.eclipse.persistence.internal.databaseaccess.Accessor;
 import org.eclipse.persistence.queries.ReadObjectQuery;
 import org.eclipse.persistence.sessions.Project;
 import org.eclipse.persistence.sessions.server.ServerSession;
-import org.eclipse.persistence.testing.tests.junit.failover.emulateddriver.EmulatedConnection;
-import org.eclipse.persistence.testing.tests.junit.failover.emulateddriver.EmulatedDriver;
+import org.eclipse.persistence.testing.dbdriver.emulateddb.EmulatedConnection;
+import org.eclipse.persistence.testing.dbdriver.emulateddb.EmulatedDriver;
 import org.junit.Assert;
 import org.junit.Test;
 

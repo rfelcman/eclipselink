@@ -1,4 +1,5 @@
 /*
+ * Copyright (c) 2026 Contributors to the Eclipse Foundation. All rights reserved.
  * Copyright (c) 2014, 2024 Oracle and/or its affiliates. All rights reserved.
  * Copyright (c) 2014, 2024 IBM Corporation. All rights reserved.
  *
@@ -47,7 +48,6 @@ import javax.sql.DataSource;
 
 import org.eclipse.persistence.config.EntityManagerProperties;
 import org.eclipse.persistence.config.PersistenceUnitProperties;
-import org.eclipse.persistence.connwrapper.DriverWrapper;
 import org.eclipse.persistence.internal.jpa.EntityManagerFactoryImpl;
 import org.eclipse.persistence.jpa.test.basic.model.Dog;
 import org.eclipse.persistence.jpa.test.basic.model.Employee;
@@ -61,6 +61,7 @@ import org.eclipse.persistence.jpa.test.framework.SQLListener;
 import org.eclipse.persistence.sessions.UnitOfWork;
 import org.eclipse.persistence.sessions.server.ConnectionPolicy;
 import org.eclipse.persistence.sessions.server.ServerSession;
+import org.eclipse.persistence.testing.dbdriver.wrapper.DriverWrapper;
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;

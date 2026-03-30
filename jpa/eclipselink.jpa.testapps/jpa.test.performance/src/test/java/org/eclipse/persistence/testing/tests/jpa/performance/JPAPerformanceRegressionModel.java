@@ -1,4 +1,5 @@
 /*
+ * Copyright (c) 2026 Contributors to the Eclipse Foundation. All rights reserved.
  * Copyright (c) 1998, 2024 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
@@ -12,12 +13,13 @@
 
 // Contributors:
 //     Oracle - initial API and implementation from Oracle TopLink
- package org.eclipse.persistence.testing.tests.jpa.performance;
+package org.eclipse.persistence.testing.tests.jpa.performance;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.spi.PersistenceProvider;
 import org.eclipse.persistence.internal.helper.Helper;
 import org.eclipse.persistence.jpa.JpaEntityManager;
+import org.eclipse.persistence.testing.dbdriver.emulateddb.EmulatedDriver;
 import org.eclipse.persistence.testing.framework.LoadBuildSystem;
 import org.eclipse.persistence.testing.framework.TestCase;
 import org.eclipse.persistence.testing.framework.TestModel;
@@ -61,7 +63,6 @@ import org.eclipse.persistence.testing.tests.jpa.performance.writing.JPAMassInse
 import org.eclipse.persistence.testing.tests.jpa.performance.writing.JPAMassInsertOrMergeEmployeeWithManagementLevelsPerformanceComparisonTest;
 import org.eclipse.persistence.testing.tests.jpa.performance.writing.JPAUpdateAddressPerformanceComparisonTest;
 import org.eclipse.persistence.testing.tests.jpa.performance.writing.JPAUpdateEmployeePerformanceComparisonTest;
-import org.eclipse.persistence.testing.tests.performance.emulateddb.EmulatedDriver;
 
 import java.lang.reflect.Field;
 import java.util.HashMap;
@@ -295,7 +296,7 @@ public class JPAPerformanceRegressionModel extends TestModel {
             try {
                 Class.forName(getSession().getLogin().getDriverClassName());
             } catch (Exception ignore) {}
-            properties.put("eclipselink.jdbc.driver", "org.eclipse.persistence.testing.tests.performance.emulateddb.EmulatedDriver");
+            properties.put("eclipselink.jdbc.driver", "org.eclipse.persistence.testing.dbdriver.emulateddb.EmulatedDriver");
             properties.put("eclipselink.jdbc.url", "emulate:" + getSession().getLogin().getConnectionString());
             LoadBuildSystem.loadBuild.loginChoice = "emulate:" + getSession().getLogin().getConnectionString();
         }

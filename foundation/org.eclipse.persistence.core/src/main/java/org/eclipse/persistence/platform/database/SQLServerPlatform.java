@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 1998, 2026 Oracle and/or its affiliates. All rights reserved.
- * Copyright (c) 1998, 2024 IBM Corporation. All rights reserved.
+ * Copyright (c) 1998, 2026 IBM Corporation. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -277,6 +277,8 @@ public class SQLServerPlatform extends DatabasePlatform {
         fieldTypeMapping.put(java.time.OffsetTime.class, new FieldDefinition.DatabaseType("DATETIME2"));
         fieldTypeMapping.put(java.time.OffsetDateTime.class, new FieldDefinition.DatabaseType("DATETIME2"));
         fieldTypeMapping.put(java.time.Instant.class, new FieldDefinition.DatabaseType("DATETIME2"));
+
+        fieldTypeMapping.put(java.util.UUID.class, new FieldDefinition.DatabaseType("BINARY", 16));
 
         return fieldTypeMapping;
     }
